@@ -1,0 +1,14 @@
+{
+  "id": 101,
+  "createdDate": 1359085920,
+  "user": {
+    "name": "jcitizen",
+    "emailAddress": "jane@example.com",
+    "id": 101,
+    "displayName": "Jane Citizen",
+    "active": true,
+    "slug": "jcitizen",
+    "type": "NORMAL"
+  },
+  "action": "MERGED"
+}

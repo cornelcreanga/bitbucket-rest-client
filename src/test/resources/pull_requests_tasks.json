@@ -1,0 +1,54 @@
+{
+  "properties": {
+    "diffAnchorPath": "path/to/file.txt"
+  },
+  "anchor": {
+    "properties": {
+      "key": "value"
+    },
+    "id": 1,
+    "version": 1,
+    "text": "An insightful comment.",
+    "author": {
+      "name": "jcitizen",
+      "emailAddress": "jane@example.com",
+      "id": 101,
+      "displayName": "Jane Citizen",
+      "active": true,
+      "slug": "jcitizen",
+      "type": "NORMAL"
+    },
+    "createdDate": 1442553508956,
+    "updatedDate": 1442553508956,
+    "comments": [],
+    "attributes": {
+      "key": [
+        "value"
+      ]
+    },
+    "tasks": [],
+    "permittedOperations": {
+      "editable": true,
+      "deletable": true
+    }
+  },
+  "author": {
+    "name": "jcitizen",
+    "emailAddress": "jane@example.com",
+    "id": 101,
+    "displayName": "Jane Citizen",
+    "active": true,
+    "slug": "jcitizen",
+    "type": "NORMAL"
+  },
+  "createdDate": 1442553509203,
+  "id": 98,
+  "permittedOperations": {
+    "deletable": true,
+    "editable": true,
+    "transitionable": true
+  },
+  "text": "Fix typos on the constructor's arguments",
+  "state": "OPEN"
+}
+

@@ -1,0 +1,204 @@
+{
+  "size": 3,
+  "limit": 25,
+  "isLastPage": true,
+  "values": [
+    {
+      "id": 101,
+      "createdDate": 1359065920,
+      "user": {
+        "name": "jcitizen",
+        "emailAddress": "jane@example.com",
+        "id": 101,
+        "displayName": "Jane Citizen",
+        "active": true,
+        "slug": "jcitizen",
+        "type": "NORMAL"
+      },
+      "action": "COMMENTED",
+      "commentAction": "ADDED",
+      "comment": {
+        "properties": {
+          "key": "value"
+        },
+        "id": 1,
+        "version": 1,
+        "text": "A measured reply.",
+        "author": {
+          "name": "jcitizen",
+          "emailAddress": "jane@example.com",
+          "id": 101,
+          "displayName": "Jane Citizen",
+          "active": true,
+          "slug": "jcitizen",
+          "type": "NORMAL"
+        },
+        "createdDate": 1442553508960,
+        "updatedDate": 1442553508960,
+        "comments": [
+          {
+            "properties": {
+              "key": "value"
+            },
+            "id": 1,
+            "version": 1,
+            "text": "An insightful comment.",
+            "author": {
+              "name": "jcitizen",
+              "emailAddress": "jane@example.com",
+              "id": 101,
+              "displayName": "Jane Citizen",
+              "active": true,
+              "slug": "jcitizen",
+              "type": "NORMAL"
+            },
+            "createdDate": 1442553508956,
+            "updatedDate": 1442553508956,
+            "comments": [],
+            "attributes": {
+              "key": [
+                "value"
+              ]
+            },
+            "tasks": [],
+            "permittedOperations": {
+              "editable": true,
+              "deletable": true
+            }
+          }
+        ],
+        "attributes": {
+          "key": [
+            "value"
+          ]
+        },
+        "tasks": [],
+        "permittedOperations": {
+          "editable": true,
+          "deletable": true
+        }
+      },
+      "commentAnchor": {
+        "fromHash": "8d51122def5632836d1cb1026e879069e10a1e13",
+        "toHash": "4b12658b6cd2bae179759c21537b4ec6627ff83b",
+        "line": 1,
+        "lineType": "CONTEXT",
+        "fileType": "FROM",
+        "path": "path/to/file",
+        "srcPath": "path/to/file",
+        "orphaned": false
+      }
+    },
+    {
+      "id": 101,
+      "createdDate": 1359065920,
+      "user": {
+        "name": "jcitizen",
+        "emailAddress": "jane@example.com",
+        "id": 101,
+        "displayName": "Jane Citizen",
+        "active": true,
+        "slug": "jcitizen",
+        "type": "NORMAL"
+      },
+      "action": "RESCOPED",
+      "fromHash": "abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde",
+      "previousFromHash": "bcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdea",
+      "previousToHash": "cdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeab",
+      "toHash": "ddeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabc",
+      "added": {
+        "changesets": [
+          {
+            "id": "abcdef0123abcdef4567abcdef8987abcdef6543",
+            "displayId": "abcdef0123a",
+            "author": {
+              "name": "charlie",
+              "emailAddress": "charlie@example.com"
+            },
+            "authorTimestamp": 1442553509807,
+            "message": "WIP on feature 1",
+            "parents": [
+              {
+                "id": "abcdef0123abcdef4567abcdef8987abcdef6543",
+                "displayId": "abcdef0"
+              }
+            ]
+          }
+        ],
+        "commits": [
+          {
+            "id": "abcdef0123abcdef4567abcdef8987abcdef6543",
+            "displayId": "abcdef0123a",
+            "author": {
+              "name": "charlie",
+              "emailAddress": "charlie@example.com"
+            },
+            "authorTimestamp": 1442553509156,
+            "message": "WIP on feature 1",
+            "parents": [
+              {
+                "id": "abcdef0123abcdef4567abcdef8987abcdef6543",
+                "displayId": "abcdef0"
+              }
+            ]
+          }
+        ],
+        "total": 1
+      },
+      "removed": {
+        "changesets": [
+          {
+            "id": "def0123abcdef4567abcdef8987abcdef6543abc",
+            "displayId": "def0123abcd",
+            "author": {
+              "name": "charlie",
+              "emailAddress": "charlie@example.com"
+            },
+            "authorTimestamp": 1442553509807,
+            "message": "More work on feature 1",
+            "parents": [
+              {
+                "id": "abcdef0123abcdef4567abcdef8987abcdef6543",
+                "displayId": "abcdef0"
+              }
+            ]
+          }
+        ],
+        "commits": [
+          {
+            "id": "def0123abcdef4567abcdef8987abcdef6543abc",
+            "displayId": "def0123abcd",
+            "author": {
+              "name": "charlie",
+              "emailAddress": "charlie@example.com"
+            },
+            "authorTimestamp": 1442553509156,
+            "message": "More work on feature 1",
+            "parents": [
+              {
+                "id": "abcdef0123abcdef4567abcdef8987abcdef6543",
+                "displayId": "abcdef0"
+              }
+            ]
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "id": 101,
+      "createdDate": 1359085920,
+      "user": {
+        "name": "jcitizen",
+        "emailAddress": "jane@example.com",
+        "id": 101,
+        "displayName": "Jane Citizen",
+        "active": true,
+        "slug": "jcitizen",
+        "type": "NORMAL"
+      },
+      "action": "MERGED"
+    }
+  ],
+  "start": 0
+}
