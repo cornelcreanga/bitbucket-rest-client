@@ -32,6 +32,7 @@ import com.cc.bitbucket.rest.client.model.Repository;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
@@ -73,14 +74,14 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<Project> getProjects(Limit limit) {
+    public Page<Project> getProjects(@Nonnull Limit limit) {
         String requestUrl = "/rest/api/1.0/projects" + addLimits(limit);
         JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false);
         return pageParser(projectParser()).apply(jsonElement);
     }
 
     @Override
-    public Optional<Project> getProjectByKey(String projectKey) {
+    public Optional<Project> getProjectByKey(@Nonnull String projectKey) {
         try {
             String requestUrl = String.format("/rest/api/1.0/projects/%s", projectKey);
             JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false);
@@ -91,21 +92,21 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<Repository> getProjectRepositories(String projectKey, Limit limit) {
+    public Page<Repository> getProjectRepositories(@Nonnull String projectKey, @Nonnull Limit limit) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos", projectKey) + addLimits(limit);
         JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false);
         return pageParser(repositoryParser()).apply(jsonElement);
     }
 
     @Override
-    public Page<Repository> getAllRepositories(Limit limit) {
+    public Page<Repository> getAllRepositories(@Nonnull Limit limit) {
         String requestUrl = "/rest/api/1.0/repos" + addLimits(limit);
         JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false);
         return pageParser(repositoryParser()).apply(jsonElement);
     }
 
     @Override
-    public Optional<Repository> getRepositoryBySlug(String projectKey, String repositorySlug) {
+    public Optional<Repository> getRepositoryBySlug(@Nonnull String projectKey, @Nonnull String repositorySlug) {
         try {
             String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s", projectKey, repositorySlug);
             JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false);
@@ -116,7 +117,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<Branch> getRepositoryBranches(String projectKey, String repositorySlug, @Nullable String query, Limit limit) {
+    public Page<Branch> getRepositoryBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Limit limit) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/branches", projectKey, repositorySlug) + addLimits(limit);
         requestUrl += addParameter("filterText", query);
         requestUrl += "&details=true&orderBy=MODIFICATION";
@@ -132,7 +133,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<Repository> getRepositoryForks(String projectKey, String repositorySlug, Limit limit) {
+    public Page<Repository> getRepositoryForks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Limit limit) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/forks", projectKey, repositorySlug) + addLimits(limit);
 
         JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false);
@@ -141,7 +142,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
 
 
     @Override
-    public Optional<Branch> getRepositoryDefaultBranch(String projectKey, String repositorySlug) {
+    public Optional<Branch> getRepositoryDefaultBranch(@Nonnull String projectKey, @Nonnull String repositorySlug) {
         try {
             String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/branches/default", projectKey, repositorySlug);
             JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false);
@@ -152,7 +153,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<PullRequest> getRepositoryPullRequests(String projectKey, String repositorySlug, PullRequestState pullRequestState,Limit limit) {
+    public Page<PullRequest> getRepositoryPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull PullRequestState pullRequestState,@Nonnull Limit limit) {
         //todo - check direction
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/pull-requests", projectKey, repositorySlug) + addLimits(limit);
 
@@ -162,7 +163,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<PullRequestChange> getRepositoryPullRequestsChanges(String projectKey, String repositorySlug, Long pullRequestId,Limit limit) {
+    public Page<PullRequestChange> getRepositoryPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,@Nonnull Limit limit) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/pull-requests/%s/changes",
                 projectKey,
                 repositorySlug,
@@ -172,7 +173,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         return pageParser(pullRequestChangeParser()).apply(jsonElement);
     }
     @Override
-    public Page<PullRequestActivity> getRepositoryPullRequestsActivities(String projectKey, String repositorySlug, Long pullRequestId,Limit limit) {
+    public Page<PullRequestActivity> getRepositoryPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,@Nonnull Limit limit) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/pull-requests/%s/activities",
                 projectKey,
                 repositorySlug,
@@ -183,7 +184,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<Task> getRepositoryPullRequestsTasks(String projectKey, String repositorySlug, Long pullRequestId,Limit limit){
+    public Page<Task> getRepositoryPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,@Nonnull Limit limit){
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/pull-requests/%s/activities",
                 projectKey,
                 repositorySlug,
@@ -194,7 +195,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<User> getUsers(Limit limit) {
+    public Page<User> getUsers(@Nonnull Limit limit) {
         String requestUrl = "/rest/api/1.0/users" + addLimits(limit);
 
         JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false);

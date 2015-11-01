@@ -23,7 +23,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-
+/**
+ * Generic Page class containing a list of values
+ * @param <T>
+ */
 public class Page<T> {
     private int size;
     private int limit;

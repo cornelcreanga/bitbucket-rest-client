@@ -17,11 +17,6 @@
 
 package com.cc.bitbucket.rest.client.model;
 
-/**
- * Describes a repository branch
- *
- * @see <a href="https://developer.atlassian.com/static/rest/stash/2.11.3/stash-rest.html#idp3259072">Stash documentation: branches</a>
- */
 public class Branch {
     private String id;
     private String displayId;

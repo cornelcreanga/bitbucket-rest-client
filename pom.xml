@@ -53,31 +53,47 @@
         </repository>
     </distributionManagement>
 
+    <properties>
+        <httpclient.version>4.2.5</httpclient.version>
+        <jsr305.version>3.0.0</jsr305.version>
+        <guava.version>18.0</guava.version>
+        <jackson.version>1.9.13</jackson.version>
+        <gson.version>2.4</gson.version>
+        <slf4j-api.version>1.7.12</slf4j-api.version>
+        <log4j-over-slf4j.version>1.7.12</log4j-over-slf4j.version>
+        <jcl-over-slf4j.version>1.7.12</jcl-over-slf4j.version>
+
+        <logback-core.version>1.1.3</logback-core.version>
+        <logback-classic.version>1.1.3</logback-classic.version>
+        <janino.version>2.7.8</janino.version>
+        <mockito-all.version>1.9.5</mockito-all.version>
+        <junit.version>4.10</junit.version>
+
+    </properties>
 
     <dependencies>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.2.5</version>
+            <version>${httpclient.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-            <version>3.0.0</version>
+            <version>${jsr305.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <version>${guava.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.4</version>
+            <version>${gson.version}</version>
         </dependency>
 
 
@@ -85,37 +101,37 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
+            <version>${slf4j-api.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.7.12</version>
+            <version>${log4j-over-slf4j.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.12</version>
+            <version>${jcl-over-slf4j.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.1.3</version>
+            <version>${logback-core.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.1.3</version>
+            <version>${logback-classic.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.codehaus.janino</groupId>
             <artifactId>janino</artifactId>
-            <version>2.7.8</version>
+            <version>${janino.version}</version>
         </dependency>
         <!-- Log end -->
 
@@ -123,14 +139,14 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
+            <version>${mockito-all.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
-            <version>4.10</version>
+            <version>${junit.version}</version>
         </dependency>
         <!-- Test end -->
     </dependencies>
@@ -196,7 +212,6 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5.3</version>
                 <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
                     <mavenExecutorId>forked-path</mavenExecutorId>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                     <preparationGoals>clean test</preparationGoals>
