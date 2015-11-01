@@ -18,14 +18,9 @@
 package com.cc.bitbucket.rest.client;
 
 import com.cc.bitbucket.rest.client.model.Page;
-import com.cc.bitbucket.rest.client.model.Permission;
 import com.cc.bitbucket.rest.client.model.RepositorySshKey;
 import com.cc.bitbucket.rest.client.model.UserSshKey;
-import com.cc.bitbucket.rest.client.http.dto.RepositorySshKeyRequest;
-import com.cc.bitbucket.rest.client.http.dto.UserSshKeyRequest;
-import com.google.common.collect.ImmutableMap;
 
-import java.util.Optional;
 
 public interface SshClient {
     Page<RepositorySshKey> getRepositoryKeys(String projectKey, String repositorySlug, Limit limit);
