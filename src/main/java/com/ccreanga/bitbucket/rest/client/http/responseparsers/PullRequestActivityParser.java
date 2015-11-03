@@ -18,12 +18,7 @@
 package com.ccreanga.bitbucket.rest.client.http.responseparsers;
 
 import com.ccreanga.bitbucket.rest.client.model.Commit;
-import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestActivity;
-import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestActivityActionType;
-import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestCommentActivity;
-import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestMergeActivity;
-import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestOpenedActivity;
-import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestRescopeActivity;
+import com.ccreanga.bitbucket.rest.client.model.pull.activity.*;
 import java.util.function.Function;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -83,7 +78,7 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
             return new PullRequestRescopeActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
-                    Parsers.userParser().apply(json.getAsJsonObject("user")),
+                    userParser().apply(json.getAsJsonObject("user")),
                     json.get("fromHash").getAsString(),
                     json.get("previousFromHash").getAsString(),
                     json.get("previousToHash").getAsString(),
@@ -93,18 +88,32 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
             );
 
         }
-        if (actionType == PullRequestActivityActionType.MERGED) {
+        else if (actionType == PullRequestActivityActionType.MERGED) {
             return new PullRequestMergeActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
-                    Parsers.userParser().apply(json.getAsJsonObject("user"))
+                    userParser().apply(json.getAsJsonObject("user"))
             );
         }
-        if (actionType == PullRequestActivityActionType.OPENED) {
+        else if (actionType == PullRequestActivityActionType.APPROVED) {
+            return new PullRequestApprovedActivity(
+                    json.get("id").getAsLong(),
+                    new Date(json.get("createdDate").getAsLong()),
+                    userParser().apply(json.getAsJsonObject("user"))
+            );
+        }
+        else if (actionType == PullRequestActivityActionType.DECLINED) {
+            return new PullRequestDeclinedActivity(
+                    json.get("id").getAsLong(),
+                    new Date(json.get("createdDate").getAsLong()),
+                    userParser().apply(json.getAsJsonObject("user"))
+            );
+        }
+        else if (actionType == PullRequestActivityActionType.OPENED) {
             return new PullRequestOpenedActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
-                    Parsers.userParser().apply(json.getAsJsonObject("user"))
+                    userParser().apply(json.getAsJsonObject("user"))
             );
         } else
             throw new RuntimeException("cannot parse action:" + actionType);
