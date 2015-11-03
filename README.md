@@ -15,7 +15,7 @@ Until the project will be deployed on the Maven Central you have to do the follo
 * Run maven clean install
 * Add the following Maven dependency into your project
 	<pre>&lt;dependency>
-    		&lt;groupId>com.cc.bitbucket&lt;/groupId>
+    		&lt;groupId>com.ccreanga.bitbucket&lt;/groupId>
     		&lt;artifactId>bitbucket-rest-client&lt;/artifactId>
     		&lt;version>1.0-SNAPSHOT&lt;/version>
 		&lt;/dependency>
