@@ -37,14 +37,14 @@ class SshClientRest extends BitBucketClient implements SshClient {
     @Override
     public Page<RepositorySshKey> getRepositoryKeys(String projectKey, String repositorySlug, Limit limit) {
         String requestUrl = String.format("/rest/keys/1.0/projects/%s/repos/%s/ssh", projectKey, repositorySlug) + addLimits(limit);
-        JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false);
+        JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false).get();
         return pageParser(repositorySshKeyParser()).apply(jsonElement);
     }
 
     @Override
     public Page<UserSshKey> getCurrentUserKeys(Limit limit) {
         String requestUrl = "/rest/ssh/1.0/keys" + addLimits(limit);
-        JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false);
+        JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false).get();
         return pageParser(Parsers.userSshKeyParser()).apply(jsonElement);
     }
 

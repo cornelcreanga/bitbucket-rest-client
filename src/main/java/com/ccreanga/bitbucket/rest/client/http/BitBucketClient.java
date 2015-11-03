@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Optional;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
@@ -59,7 +60,7 @@ abstract class BitBucketClient {
         return "";
     }
 
-    protected JsonElement execute(String requestUrl, HttpMethod method, JsonObject requestJson, boolean anonymous) {
+    protected Optional<JsonElement> execute(String requestUrl, HttpMethod method, JsonObject requestJson, boolean anonymous) {
 
         String requestData = requestJson != null ? requestJson.toString() : null;
         HttpResponse response = bitBucketHttpExecutor.execute(new HttpRequest(requestUrl, method, requestData, anonymous));
@@ -67,22 +68,22 @@ abstract class BitBucketClient {
         String responseString = response.getBody();
         LOGGER.trace(String.format("doRestCall response: code=%d; response='%s'", response.getStatusCode(), responseString));
 
+        Optional<JsonElement> jsonElement = getJsonElement(response, responseString);
         if (response.isSuccessful()) {
-            return getJsonElement(response, responseString);
+            return jsonElement;
         } else {
             List<BitBucketError> errors;
-            JsonElement jsonElement = getJsonElement(response, responseString);
-            errors = jsonElement.isJsonObject() ?
-                    Parsers.errorsParser().apply(jsonElement) :
+            errors = jsonElement.get().isJsonObject() ?
+                    Parsers.errorsParser().apply(jsonElement.get()) :
                     BitBucketException.toErrors("Request to Stash failed. Returned with " + response.getStatusCode() + ". Response body is empty.");
             throw createStashRestException(response, errors, responseString);
         }
 
     }
 
-    private JsonElement getJsonElement(HttpResponse response, String responseString) {
+    private Optional<JsonElement> getJsonElement(HttpResponse response, String responseString) {
         try {
-            return new JsonParser().parse(responseString);
+            return responseString==null?Optional.empty():Optional.of(new JsonParser().parse(responseString));
         } catch (JsonSyntaxException e) {
             throw createStashRestException(response, BitBucketException.toErrors("Failed to parse response: " + e.getMessage()), responseString);
         }

@@ -25,7 +25,6 @@ import java.util.List;
 
 /**
  * Generic Page class containing a list of values
- * @param <T>
  */
 public class Page<T> {
     private int size;

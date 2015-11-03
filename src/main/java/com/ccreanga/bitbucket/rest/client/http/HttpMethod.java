@@ -19,5 +19,7 @@ package com.ccreanga.bitbucket.rest.client.http;
 
 enum HttpMethod {
     GET,
-    POST
+    POST,
+    PUT,
+    DELETE
 }

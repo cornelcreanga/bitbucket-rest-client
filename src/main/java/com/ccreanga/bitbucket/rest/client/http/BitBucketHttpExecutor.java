@@ -27,6 +27,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -87,9 +88,13 @@ class BitBucketHttpExecutor {
             StatusLine status = response.getStatusLine();
             Map<String, String> headers = toHeaderMultimap(response.getAllHeaders());
 
-            ByteArrayOutputStream out = new ByteArrayOutputStream(2048);
-            response.getEntity().writeTo(out);
-            return new HttpResponse(status.getStatusCode(), status.getReasonPhrase(), headers, new String(out.toByteArray(),"UTF-8"));
+            String body = null;
+            if (response.getEntity()!=null){
+                ByteArrayOutputStream out = new ByteArrayOutputStream(2048);
+                response.getEntity().writeTo(out);
+                body = new String(out.toByteArray(),"UTF-8");
+            }
+            return new HttpResponse(status.getStatusCode(), status.getReasonPhrase(), headers, body);
 
         } catch (IOException e) {
             throw new BitBucketException(e);
@@ -110,16 +115,20 @@ class BitBucketHttpExecutor {
 
     private HttpRequestBase createRequest(HttpRequest httpRequest) {
         URI fullUri = URI.create(baseUrl + "/" + httpRequest.getUrl()).normalize();
+        String payload;
         switch (httpRequest.getMethod()) {
             case GET:
                 return new HttpGet(fullUri);
             case POST:
                 HttpPost request = new HttpPost(fullUri);
-                String payload = httpRequest.getPayload();
+                payload = httpRequest.getPayload();
                 if (payload != null) {
                     request.setEntity(new StringEntity(payload, ContentType.APPLICATION_JSON));
                 }
                 return request;
+            case DELETE:
+                return new HttpDelete(fullUri);
+
             default:
                 throw new UnsupportedOperationException(String.format("http method %s is not supported", httpRequest.getMethod()));
         }

@@ -110,10 +110,11 @@ public interface ProjectClient {
      * @param projectKey project key
      * @param repositorySlug repository slug
      * @param pullRequestId pull request id
+     * @param sinceCommitId the commit to which until should be compared to produce a page of changes. If not specified the commit's first parent is assumed
      * @param limit limit object
      * @return a Page of PullRequestChange objects
      */
-    Page<PullRequestChange> getRepositoryPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,@Nonnull Limit limit);
+    Page<PullRequestChange> getRepositoryPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,String sinceCommitId,@Nonnull Limit limit);
 
     /**
      * Returns a page of activities (between Limit.start and Limit.end) associated with a project/repository/pull request
@@ -147,4 +148,10 @@ public interface ProjectClient {
      * @return map of properties
      */
     ImmutableMap<String, String> getBitBucketApplicationProperties();
+
+    Project createProject(@Nonnull String projectKey, @Nonnull String name, @Nonnull ProjectType type, String description);
+    Repository createRepository(@Nonnull String projectKey, @Nonnull String name, @Nonnull String scmId, boolean forkable);
+    void deleteProject(@Nonnull String projectKey);
+    void deleteRepository(@Nonnull String projectKey, @Nonnull String repositorySlug);
+
 }

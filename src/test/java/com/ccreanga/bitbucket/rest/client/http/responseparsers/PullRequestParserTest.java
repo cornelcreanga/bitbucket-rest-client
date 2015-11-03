@@ -80,7 +80,6 @@ public class PullRequestParserTest {
 
         JsonElement element = new JsonParser().parse(TestUtil.loadString("pull_requests.json"));
         PullRequest parsedPullRequest = pullRequestParser.apply(element);
-        System.out.println(pullRequest);
 
         Assert.assertEquals(pullRequest, parsedPullRequest);
 

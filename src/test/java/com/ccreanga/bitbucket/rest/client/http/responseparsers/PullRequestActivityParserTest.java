@@ -91,7 +91,6 @@ public class PullRequestActivityParserTest{
 
         JsonElement element = new JsonParser().parse(TestUtil.loadString("pull_requests_activities_commented.json"));
         PullRequestActivity parsedPullRequestActivity = pullRequestActivityParser.apply(element);
-        System.out.println(parsedPullRequestActivity);
         Assert.assertEquals(pullRequestActivity, parsedPullRequestActivity);
 
     }

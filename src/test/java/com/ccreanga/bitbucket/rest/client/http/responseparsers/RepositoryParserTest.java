@@ -50,7 +50,6 @@ public class RepositoryParserTest{
 
         JsonElement element = new JsonParser().parse(TestUtil.loadString("repo.json"));
         Repository parsedRepository = Parsers.repositoryParser().apply(element);
-        System.out.println(parsedRepository);
         Assert.assertEquals(repository, parsedRepository);
     }
 }
