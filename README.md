@@ -1,6 +1,7 @@
-Stash Rest Java Wrapper
+Stash Java Client Wrapper
 -------------------------------
 
+[![Build Status](https://travis-ci.org/cornelcreanga/bitbucket-rest-client.svg)](https://travis-ci.org/cornelcreanga/bitbucket-rest-client)
 
 Tiny Java library acting as a wrapper over the Stash (Bitbucket Server) REST API.
  
