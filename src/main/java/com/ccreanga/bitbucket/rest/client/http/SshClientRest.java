@@ -17,7 +17,7 @@
 
 package com.ccreanga.bitbucket.rest.client.http;
 
-import com.ccreanga.bitbucket.rest.client.Limit;
+import com.ccreanga.bitbucket.rest.client.Range;
 import com.ccreanga.bitbucket.rest.client.SshClient;
 import com.ccreanga.bitbucket.rest.client.model.Page;
 import com.ccreanga.bitbucket.rest.client.model.RepositorySshKey;
@@ -35,15 +35,15 @@ class SshClientRest extends BitBucketClient implements SshClient {
     }
 
     @Override
-    public Page<RepositorySshKey> getRepositoryKeys(String projectKey, String repositorySlug, Limit limit) {
-        String requestUrl = String.format("/rest/keys/1.0/projects/%s/repos/%s/ssh", projectKey, repositorySlug) + addLimits(limit);
+    public Page<RepositorySshKey> getRepositoryKeys(String projectKey, String repositorySlug, Range range) {
+        String requestUrl = String.format("/rest/keys/1.0/projects/%s/repos/%s/ssh", projectKey, repositorySlug) + addLimits(range);
         JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false).get();
         return pageParser(repositorySshKeyParser()).apply(jsonElement);
     }
 
     @Override
-    public Page<UserSshKey> getCurrentUserKeys(Limit limit) {
-        String requestUrl = "/rest/ssh/1.0/keys" + addLimits(limit);
+    public Page<UserSshKey> getCurrentUserKeys(Range range) {
+        String requestUrl = "/rest/ssh/1.0/keys" + addLimits(range);
         JsonElement jsonElement = execute(requestUrl, HttpMethod.GET, null, false).get();
         return pageParser(Parsers.userSshKeyParser()).apply(jsonElement);
     }

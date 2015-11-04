@@ -39,12 +39,12 @@ class PageParser<T> implements Function<JsonElement, Page<T>> {
         JsonObject json = jsonElement.getAsJsonObject();
         List<T> values = Parsers.listParser(valueParser).apply(json.getAsJsonArray("values"));
 
-        return new Page<T>(
+        return new Page<>(
                 json.get("size").getAsInt(),
                 json.get("limit").getAsInt(),
                 optionalJsonBoolean(json, "isLastPage"),
                 json.get("start").getAsInt(),
-                (int)optionalJsonLong(json,"nextPageStart"),
+                (int) optionalJsonLong(json, "nextPageStart"),
                 values
         );
     }

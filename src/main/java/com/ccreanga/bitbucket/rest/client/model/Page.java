@@ -37,6 +37,8 @@ public class Page<T> {
     private List<T> values;
 
     public Page(int size, int limit, boolean lastPage, int start, @Nullable Integer nextPageStart, @Nonnull Iterable<T> values) {
+        if ((!lastPage) && (nextPageStart==null))
+            throw new IllegalArgumentException("nextPageStart should be not null if lastPage is false");
         this.size = size;
         this.limit = limit;
         this.lastPage = lastPage;

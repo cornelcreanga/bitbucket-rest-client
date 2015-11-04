@@ -16,7 +16,7 @@
  */
 package com.ccreanga.bitbucket.rest.client.http;
 
-import com.ccreanga.bitbucket.rest.client.Limit;
+import com.ccreanga.bitbucket.rest.client.Range;
 import com.ccreanga.bitbucket.rest.client.http.dto.BitBucketError;
 import com.ccreanga.bitbucket.rest.client.http.responseparsers.Parsers;
 import com.google.gson.JsonElement;
@@ -45,11 +45,11 @@ abstract class BitBucketClient {
         this.bitBucketHttpExecutor = bitBucketHttpExecutor;
     }
 
-    protected String addLimits(Limit limit) {
+    protected String addLimits(Range range) {
         StringBuilder sb = new StringBuilder(20);
-        sb.append("?start=").append(limit.getStart());
-        if (limit.getEnd() > 0)
-            sb.append("&limit=").append(limit.getEnd());
+        sb.append("?start=").append(range.getStart());
+        if (range.getLimit() > 0)
+            sb.append("&limit=").append(range.getLimit());
         return sb.toString();
     }
 

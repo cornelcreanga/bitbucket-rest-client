@@ -17,23 +17,27 @@
 
 package com.ccreanga.bitbucket.rest.client;
 
-public class Limit {
+public class Range {
 
-    private int start = -1;
-    private int end = -1;
+    private int start;
+    private int limit;
+    public static Range ALL = new Range(0,Integer.MAX_VALUE);
 
-    public Limit(int start, int end) {
+    public Range(int start, int limit) {
         if (start < 0)
             throw new IllegalArgumentException("start should be greater than 0 not:" + start);
+        if (limit < 0)
+            throw new IllegalArgumentException("limit should be greater than 0 not:" + start);
+
         this.start = start;
-        this.end = end;
+        this.limit = limit;
     }
 
     public int getStart() {
         return start;
     }
 
-    public int getEnd() {
-        return end;
+    public int getLimit() {
+        return limit;
     }
 }

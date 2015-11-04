@@ -23,8 +23,8 @@ import com.ccreanga.bitbucket.rest.client.model.UserSshKey;
 
 
 public interface SshClient {
-    Page<RepositorySshKey> getRepositoryKeys(String projectKey, String repositorySlug, Limit limit);
+    Page<RepositorySshKey> getRepositoryKeys(String projectKey, String repositorySlug, Range range);
 
-    Page<UserSshKey> getCurrentUserKeys(Limit limit);
+    Page<UserSshKey> getCurrentUserKeys(Range range);
 
 }
