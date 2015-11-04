@@ -1,4 +1,4 @@
-Stash Java Client Wrapper
+Stash Java Client
 -------------------------------
 
 [![Build Status](https://travis-ci.org/cornelcreanga/bitbucket-rest-client.svg)](https://travis-ci.org/cornelcreanga/bitbucket-rest-client)
@@ -10,11 +10,7 @@ Work in progress. For the moment I plan to obtain pull requests statistics so I 
 Getting Started
 ---------------
 
-Until the project will be deployed on the Maven Central you have to do the following:
-
-* Clone the project on your machine
-* Run maven clean install
-* Add the following Maven dependency into your project
+* Maven dependency
 	<pre>&lt;dependency>
     		&lt;groupId>com.ccreanga.bitbucket&lt;/groupId>
     		&lt;artifactId>bitbucket-rest-client&lt;/artifactId>
