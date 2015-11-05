@@ -31,13 +31,18 @@ import java.util.Set;
 
 public interface ProjectClient {
     /**
-     * Returns a page of projects (between Limit.start and Limit.end)
+     * Returns a page of projects (between Range.start and Range.start+Range.limit) 
      * Only projects for which the authenticated user has the PROJECT_VIEW permission will be returned
      * @param range limit object
      * @return a Page of projects
      */
     Page<Project> getProjects(@Nonnull Range range);
 
+    /**
+     * Returns all the projects
+     * Only projects for which the authenticated user has the PROJECT_VIEW permission will be returned
+     * @return a Set of projects
+     */
     Set<Project> getAllProjects();
 
     /**
@@ -48,7 +53,7 @@ public interface ProjectClient {
     Optional<Project> getProjectByKey(@Nonnull String projectKey);
 
     /**
-     * Returns a page of repositories (between Limit.start and Limit.end) belonging to a project
+     * Returns a page of repositories (between Range.start and Range.start+Range.limit)  belonging to a project
      * The authenticated user must have REPO_READ permission for the specified project
      * @param projectKey project key
      * @param range limit object
@@ -56,14 +61,24 @@ public interface ProjectClient {
      */
     Page<Repository> getProjectRepositories(@Nonnull String projectKey, @Nonnull Range range);
 
+    /**
+     * Returns all the repositories belonging to a project
+     * The authenticated user must have REPO_READ permission for the specified project
+     * @param projectKey project key
+     * @return a Set of repositories
+     */
     Set<Repository> getAllProjectRepositories(@Nonnull String projectKey);
     /**
-     * Returns a page of repositories (between Limit.start and Limit.end)
+     * Returns a page of repositories (between Range.start and Range.start+Range.limit) 
      * @param range limit object
      * @return a Page of repositories
      */
     Page<Repository> getAllRepositories(@Nonnull Range range);
-
+    /**
+     * Returns all the repositories
+     * The authenticated user must have REPO_READ permission for the specified project
+     * @return a Set of repositories
+     */
     Set<Repository> getAllRepositories();
 
     /**
@@ -75,26 +90,37 @@ public interface ProjectClient {
     Optional<Repository> getRepositoryBySlug(@Nonnull String projectKey, @Nonnull String repositorySlug);
 
     /**
-     * Returns a page of branches (between Limit.start and Limit.end)
+     * Returns a page of repository branches (between Range.start and Range.start+Range.limit)
      * @param projectKey project key
      * @param repositorySlug repository slug
      * @param query optional parameter. If not null it will return the braches matching this parameter
      * @param range limit object
-     * @return a Page of repositories
+     * @return a Page of branches
      */
     Page<Branch> getRepositoryBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Range range);
-
+    /**
+     * Returns all the repository branches
+     * @param projectKey project key
+     * @param repositorySlug repository slug
+     * @param query optional parameter. If not null it will return the braches matching this parameter
+     * @return a Set of branches
+     */
     Set<Branch> getAllRepositoryBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query);
 
     /**
-     * Returns a page of forks (between Limit.start and Limit.end) associated with a repository
+     * Returns a page of forks (between Range.start and Range.start+Range.limit)  associated with a repository
      * @param projectKey project key
      * @param repositorySlug repository slug
      * @param range limit object
      * @return a Page of forks
      */
     Page<Repository> getRepositoryForks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Range range);
-
+    /**
+     * Returns all the repository forks
+     * @param projectKey project key
+     * @param repositorySlug repository slug
+     * @return a Set of forks
+     */
     Set<Repository> getAllRepositoryForks(@Nonnull String projectKey, @Nonnull String repositorySlug);
 
     /**
@@ -106,7 +132,7 @@ public interface ProjectClient {
     Optional<Branch> getRepositoryDefaultBranch(@Nonnull String projectKey, @Nonnull String repositorySlug);
 
     /**
-     * Returns a page of pull requests (between Limit.start and Limit.end) associated with a project/repository, with the specified state
+     * Returns a page of pull requests (between Range.start and Range.start+Range.limit)  associated with a project/repository, with the specified state
      * @param projectKey project key
      * @param repositorySlug repository slug
      * @param pullRequestState PullRequestState
@@ -115,9 +141,16 @@ public interface ProjectClient {
      */
     Page<PullRequest> getRepositoryPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull PullRequestState pullRequestState,@Nonnull Range range);
 
+    /**
+     * Returns all the pull requests associated with a project/repository, with the specified state
+     * @param projectKey project key
+     * @param repositorySlug repository slug
+     * @param pullRequestState PullRequestState
+     * @return a Set of PullRequests
+     */
     Set<PullRequest> getAllRepositoryPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull PullRequestState pullRequestState);
     /**
-     * Returns a page of changes (between Limit.start and Limit.end) associated with a project/repository/pull request
+     * Returns a page of changes (between Range.start and Range.start+Range.limit)  associated with a project/repository/pull request
      * @param projectKey project key
      * @param repositorySlug repository slug
      * @param pullRequestId pull request id
@@ -126,11 +159,18 @@ public interface ProjectClient {
      * @return a Page of PullRequestChange objects
      */
     Page<PullRequestChange> getRepositoryPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,String sinceCommitId,@Nonnull Range range);
-
+    /**
+     * Returns all the changes associated with a project/repository/pull request
+     * @param projectKey project key
+     * @param repositorySlug repository slug
+     * @param pullRequestId pull request id
+     * @param sinceCommitId the commit to which until should be compared to produce a page of changes. If not specified the commit's first parent is assumed
+     * @return a Set of PullRequestChange objects
+     */
     Set<PullRequestChange> getAllRepositoryPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,String sinceCommitId);
 
     /**
-     * Returns a page of activities (between Limit.start and Limit.end) associated with a project/repository/pull request
+     * Returns a page of activities (between Range.start and Range.start+Range.limit)  associated with a project/repository/pull request
      * @param projectKey project key
      * @param repositorySlug repository slug
      * @param pullRequestId pull request id
@@ -138,11 +178,17 @@ public interface ProjectClient {
      * @return a Page of PullRequestActivity objects
      */
     Page<PullRequestActivity> getRepositoryPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,@Nonnull Range range);
-
+    /**
+     * Returns all the associated with a project/repository/pull request
+     * @param projectKey project key
+     * @param repositorySlug repository slug
+     * @param pullRequestId pull request id
+     * @return a Set of PullRequestActivity objects
+     */
     Set<PullRequestActivity> getAllRepositoryPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId);
 
     /**
-     * Returns a page of tasks (between Limit.start and Limit.end) associated with a project/repository/pull request
+     * Returns a page of tasks (between Range.start and Range.start+Range.limit)  associated with a project/repository/pull request
      * @param projectKey project key
      * @param repositorySlug repository slug
      * @param pullRequestId pull request id
@@ -150,16 +196,25 @@ public interface ProjectClient {
      * @return a Page of Task objects
      */
     Page<Task> getRepositoryPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,@Nonnull Range range);
-
+    /**
+     * Returns all the tasks associated with a project/repository/pull request
+     * @param projectKey project key
+     * @param repositorySlug repository slug
+     * @param pullRequestId pull request id
+     * @return a Set of Task objects
+     */
     Set<Task> getAllRepositoryPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId);
 
     /**
-     * Returns a page of users (between Limit.start and Limit.end)
+     * Returns a page of users (between Range.start and Range.start+Range.limit) 
      * @param range limit object
      * @return a Page of User objects
      */
     Page<User> getUsers(@Nonnull Range range);
-
+    /**
+     * Returns all the users (between Range.start and Range.start+Range.limit)
+     * @return a Set of User objects
+     */
     Set<User> getAllUsers();
 
 
@@ -169,9 +224,37 @@ public interface ProjectClient {
      */
     ImmutableMap<String, String> getBitBucketApplicationProperties();
 
+    /**
+     * Creates a project belonging to the current user
+     * @param projectKey project key (unique key)
+     * @param name project name
+     * @param type project type
+     * @param description project description
+     * @return the created project
+     */
     Project createProject(@Nonnull String projectKey, @Nonnull String name, @Nonnull ProjectType type, String description);
+
+    /**
+     * Creates a repository belonging to the current user
+     * @param projectKey project key (unique key)
+     * @param name repository name
+     * @param scmId repository scmId
+     * @param forkable is the repository forkable?
+     * @return the created repository
+     */
     Repository createRepository(@Nonnull String projectKey, @Nonnull String name, @Nonnull String scmId, boolean forkable);
+
+    /**
+     * Deletes a project
+     * @param projectKey project key (unique key)
+     */
     void deleteProject(@Nonnull String projectKey);
+
+    /**
+     * Deletes a repository identified by project key+repository slug
+     * @param projectKey project key
+     * @param repositorySlug repository slug
+     */
     void deleteRepository(@Nonnull String projectKey, @Nonnull String repositorySlug);
 
 }
