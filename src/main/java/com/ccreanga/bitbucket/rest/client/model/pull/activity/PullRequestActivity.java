@@ -28,5 +28,19 @@ public abstract class PullRequestActivity {
     protected User user;
     protected PullRequestActivityActionType actionType;
 
+    public Long getId() {
+        return id;
+    }
 
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public PullRequestActivityActionType getActionType() {
+        return actionType;
+    }
 }
