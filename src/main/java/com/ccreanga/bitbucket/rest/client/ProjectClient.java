@@ -43,7 +43,7 @@ public interface ProjectClient {
      * Only projects for which the authenticated user has the PROJECT_VIEW permission will be returned
      * @return a Set of projects
      */
-    Set<Project> getAllProjects();
+    Set<Project> getProjects();
 
     /**
      * Returns a project specified by its project key
@@ -67,7 +67,7 @@ public interface ProjectClient {
      * @param projectKey project key
      * @return a Set of repositories
      */
-    Set<Repository> getAllProjectRepositories(@Nonnull String projectKey);
+    Set<Repository> getProjectRepositories(@Nonnull String projectKey);
     /**
      * Returns a page of repositories (between Range.start and Range.start+Range.limit) 
      * @param range limit object
@@ -97,7 +97,7 @@ public interface ProjectClient {
      * @param range limit object
      * @return a Page of branches
      */
-    Page<Branch> getRepositoryBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Range range);
+    Page<Branch> getBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Range range);
     /**
      * Returns all the repository branches
      * @param projectKey project key
@@ -105,7 +105,7 @@ public interface ProjectClient {
      * @param query optional parameter. If not null it will return the braches matching this parameter
      * @return a Set of branches
      */
-    Set<Branch> getAllRepositoryBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query);
+    Set<Branch> getBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query);
 
     /**
      * Returns a page of forks (between Range.start and Range.start+Range.limit)  associated with a repository
@@ -114,14 +114,14 @@ public interface ProjectClient {
      * @param range limit object
      * @return a Page of forks
      */
-    Page<Repository> getRepositoryForks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Range range);
+    Page<Repository> getForks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Range range);
     /**
      * Returns all the repository forks
      * @param projectKey project key
      * @param repositorySlug repository slug
      * @return a Set of forks
      */
-    Set<Repository> getAllRepositoryForks(@Nonnull String projectKey, @Nonnull String repositorySlug);
+    Set<Repository> getForks(@Nonnull String projectKey, @Nonnull String repositorySlug);
 
     /**
      * Returns the default branch for a repository
@@ -129,26 +129,26 @@ public interface ProjectClient {
      * @param repositorySlug repository slug
      * @return Optional object wrapping the branch
      */
-    Optional<Branch> getRepositoryDefaultBranch(@Nonnull String projectKey, @Nonnull String repositorySlug);
+    Optional<Branch> getDefaultBranch(@Nonnull String projectKey, @Nonnull String repositorySlug);
 
     /**
      * Returns a page of pull requests (between Range.start and Range.start+Range.limit)  associated with a project/repository, with the specified state
      * @param projectKey project key
      * @param repositorySlug repository slug
-     * @param pullRequestState PullRequestState
+     * @param pullRequestState pullRequest state; null means all the states
      * @param range limit object
      * @return a Page of PullRequests
      */
-    Page<PullRequest> getRepositoryPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull PullRequestState pullRequestState,@Nonnull Range range);
+    Page<PullRequest> getPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, PullRequestState pullRequestState, @Nonnull Range range);
 
     /**
      * Returns all the pull requests associated with a project/repository, with the specified state
      * @param projectKey project key
      * @param repositorySlug repository slug
-     * @param pullRequestState PullRequestState
+     * @param pullRequestState pullRequest state; null means all the states
      * @return a Set of PullRequests
      */
-    Set<PullRequest> getAllRepositoryPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull PullRequestState pullRequestState);
+    Set<PullRequest> getPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, PullRequestState pullRequestState);
     /**
      * Returns a page of changes (between Range.start and Range.start+Range.limit)  associated with a project/repository/pull request
      * @param projectKey project key
@@ -158,7 +158,7 @@ public interface ProjectClient {
      * @param range limit object
      * @return a Page of PullRequestChange objects
      */
-    Page<PullRequestChange> getRepositoryPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,String sinceCommitId,@Nonnull Range range);
+    Page<PullRequestChange> getPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId, String sinceCommitId, @Nonnull Range range);
     /**
      * Returns all the changes associated with a project/repository/pull request
      * @param projectKey project key
@@ -167,7 +167,7 @@ public interface ProjectClient {
      * @param sinceCommitId the commit to which until should be compared to produce a page of changes. If not specified the commit's first parent is assumed
      * @return a Set of PullRequestChange objects
      */
-    Set<PullRequestChange> getAllRepositoryPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,String sinceCommitId);
+    Set<PullRequestChange> getPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId, String sinceCommitId);
 
     /**
      * Returns a page of activities (between Range.start and Range.start+Range.limit)  associated with a project/repository/pull request
@@ -177,7 +177,7 @@ public interface ProjectClient {
      * @param range limit object
      * @return a Page of PullRequestActivity objects
      */
-    Page<PullRequestActivity> getRepositoryPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,@Nonnull Range range);
+    Page<PullRequestActivity> getPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId, @Nonnull Range range);
     /**
      * Returns all the associated with a project/repository/pull request
      * @param projectKey project key
@@ -185,7 +185,7 @@ public interface ProjectClient {
      * @param pullRequestId pull request id
      * @return a Set of PullRequestActivity objects
      */
-    Set<PullRequestActivity> getAllRepositoryPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId);
+    Set<PullRequestActivity> getPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId);
 
     /**
      * Returns a page of tasks (between Range.start and Range.start+Range.limit)  associated with a project/repository/pull request
@@ -195,7 +195,7 @@ public interface ProjectClient {
      * @param range limit object
      * @return a Page of Task objects
      */
-    Page<Task> getRepositoryPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,@Nonnull Range range);
+    Page<Task> getPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId, @Nonnull Range range);
     /**
      * Returns all the tasks associated with a project/repository/pull request
      * @param projectKey project key
@@ -203,7 +203,7 @@ public interface ProjectClient {
      * @param pullRequestId pull request id
      * @return a Set of Task objects
      */
-    Set<Task> getAllRepositoryPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId);
+    Set<Task> getPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId);
 
     /**
      * Returns a page of users (between Range.start and Range.start+Range.limit) 
@@ -215,7 +215,7 @@ public interface ProjectClient {
      * Returns all the users (between Range.start and Range.start+Range.limit)
      * @return a Set of User objects
      */
-    Set<User> getAllUsers();
+    Set<User> getUsers();
 
 
     /**

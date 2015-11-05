@@ -42,7 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 
 import static com.ccreanga.bitbucket.rest.client.http.responseparsers.Parsers.*;
 import static com.ccreanga.bitbucket.rest.client.http.HttpMethod.*;
@@ -62,7 +61,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         return pageParser(projectParser()).apply(jsonElement);
     }
 
-    public Set<Project> getAllProjects() {
+    public Set<Project> getProjects() {
         Range range = new Range(0, DEFAULT_LIMIT);
         Page<Project> page = getProjects(range);
         Set<Project> projects = new HashSet<>(page.getSize());
@@ -93,7 +92,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Set<Repository> getAllProjectRepositories(@Nonnull String projectKey) {
+    public Set<Repository> getProjectRepositories(@Nonnull String projectKey) {
         Range range = new Range(0, DEFAULT_LIMIT);
         Page<Repository> page = getProjectRepositories(projectKey,range);
         Set<Repository> repositories = new HashSet<>(page.getSize());
@@ -137,7 +136,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<Branch> getRepositoryBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Range range) {
+    public Page<Branch> getBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Range range) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/branches", projectKey, repositorySlug) + addLimits(range);
         requestUrl += addParameter("filterText", query);
         requestUrl += "&details=true&orderBy=MODIFICATION";
@@ -153,20 +152,20 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Set<Branch> getAllRepositoryBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query) {
+    public Set<Branch> getBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query) {
         Range range = new Range(0, DEFAULT_LIMIT);
-        Page<Branch> page = getRepositoryBranches(projectKey, repositorySlug,query,range);
+        Page<Branch> page = getBranches(projectKey, repositorySlug, query, range);
         Set<Branch> branches = new HashSet<>(page.getSize());
         branches.addAll(page.getValues());
         while(page.getNextPageStart()!=null){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            branches.addAll( getRepositoryBranches(projectKey, repositorySlug, query, range).getValues());
+            branches.addAll( getBranches(projectKey, repositorySlug, query, range).getValues());
         }
         return branches;
     }
 
     @Override
-    public Page<Repository> getRepositoryForks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Range range) {
+    public Page<Repository> getForks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Range range) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/forks", projectKey, repositorySlug) + addLimits(range);
 
         JsonElement jsonElement = execute(requestUrl, GET, null, false).get();
@@ -174,21 +173,21 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Set<Repository> getAllRepositoryForks(@Nonnull String projectKey, @Nonnull String repositorySlug) {
+    public Set<Repository> getForks(@Nonnull String projectKey, @Nonnull String repositorySlug) {
         Range range = new Range(0, DEFAULT_LIMIT);
-        Page<Repository> page = getRepositoryForks(projectKey, repositorySlug, range);
+        Page<Repository> page = getForks(projectKey, repositorySlug, range);
         Set<Repository> repositories = new HashSet<>(page.getSize());
         repositories.addAll(page.getValues());
         while(page.getNextPageStart()!=null){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            repositories.addAll( getRepositoryForks(projectKey, repositorySlug, range).getValues());
+            repositories.addAll( getForks(projectKey, repositorySlug, range).getValues());
         }
         return repositories;
     }
 
 
     @Override
-    public Optional<Branch> getRepositoryDefaultBranch(@Nonnull String projectKey, @Nonnull String repositorySlug) {
+    public Optional<Branch> getDefaultBranch(@Nonnull String projectKey, @Nonnull String repositorySlug) {
         try {
             String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/branches/default", projectKey, repositorySlug);
             JsonElement jsonElement = execute(requestUrl, GET, null, false).get();
@@ -199,30 +198,32 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<PullRequest> getRepositoryPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull PullRequestState pullRequestState,@Nonnull Range range) {
+    public Page<PullRequest> getPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, PullRequestState pullRequestState, @Nonnull Range range) {
         //todo - check direction
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/pull-requests", projectKey, repositorySlug) + addLimits(range);
 
-        requestUrl+="&direction=INCOMING&state="+pullRequestState.toString();
+        requestUrl+="&direction=INCOMING";
+        if (pullRequestState!=null)
+            requestUrl+="&state="+pullRequestState.toString();
         JsonElement jsonElement = execute(requestUrl, GET, null, false).get();
         return pageParser(pullRequestParser()).apply(jsonElement);
     }
 
     @Override
-    public Set<PullRequest> getAllRepositoryPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull PullRequestState pullRequestState) {
+    public Set<PullRequest> getPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, PullRequestState pullRequestState) {
         Range range = new Range(0, DEFAULT_LIMIT);
-        Page<PullRequest> page = getRepositoryPullRequests(projectKey, repositorySlug, pullRequestState, range);
+        Page<PullRequest> page = getPullRequests(projectKey, repositorySlug, pullRequestState, range);
         Set<PullRequest> pullRequests = new HashSet<>(page.getSize());
         pullRequests.addAll(page.getValues());
         while(page.getNextPageStart()!=null){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            pullRequests.addAll( getRepositoryPullRequests(projectKey, repositorySlug, pullRequestState, range).getValues());
+            pullRequests.addAll( getPullRequests(projectKey, repositorySlug, pullRequestState, range).getValues());
         }
         return pullRequests;
     }
 
     @Override
-    public Page<PullRequestChange> getRepositoryPullRequestsChanges(
+    public Page<PullRequestChange> getPullRequestsChanges(
             @Nonnull String projectKey,
             @Nonnull String repositorySlug,
             @Nonnull Long pullRequestId,
@@ -239,20 +240,20 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Set<PullRequestChange> getAllRepositoryPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId, String sinceCommitId) {
+    public Set<PullRequestChange> getPullRequestsChanges(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId, String sinceCommitId) {
         Range range = new Range(0, DEFAULT_LIMIT);
-        Page<PullRequestChange> page = getRepositoryPullRequestsChanges(projectKey, repositorySlug, pullRequestId,sinceCommitId, range);
+        Page<PullRequestChange> page = getPullRequestsChanges(projectKey, repositorySlug, pullRequestId, sinceCommitId, range);
         Set<PullRequestChange> pullRequestChanges = new HashSet<>(page.getSize());
         pullRequestChanges.addAll(page.getValues());
         while(page.getNextPageStart()!=null){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            pullRequestChanges.addAll( getRepositoryPullRequestsChanges(projectKey, repositorySlug, pullRequestId,sinceCommitId, range).getValues());
+            pullRequestChanges.addAll( getPullRequestsChanges(projectKey, repositorySlug, pullRequestId, sinceCommitId, range).getValues());
         }
         return pullRequestChanges;
     }
 
     @Override
-    public Page<PullRequestActivity> getRepositoryPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,@Nonnull Range range) {
+    public Page<PullRequestActivity> getPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId, @Nonnull Range range) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/pull-requests/%s/activities",
                 projectKey,
                 repositorySlug,
@@ -263,20 +264,20 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Set<PullRequestActivity> getAllRepositoryPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId) {
+    public Set<PullRequestActivity> getPullRequestsActivities(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId) {
         Range range = new Range(0, DEFAULT_LIMIT);
-        Page<PullRequestActivity> page = getRepositoryPullRequestsActivities(projectKey, repositorySlug, pullRequestId, range);
+        Page<PullRequestActivity> page = getPullRequestsActivities(projectKey, repositorySlug, pullRequestId, range);
         Set<PullRequestActivity> pullRequestActivities = new HashSet<>(page.getSize());
         pullRequestActivities.addAll(page.getValues());
         while(page.getNextPageStart()!=null){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            pullRequestActivities.addAll( getRepositoryPullRequestsActivities(projectKey, repositorySlug, pullRequestId, range).getValues());
+            pullRequestActivities.addAll( getPullRequestsActivities(projectKey, repositorySlug, pullRequestId, range).getValues());
         }
         return pullRequestActivities;
     }
 
     @Override
-    public Page<Task> getRepositoryPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId,@Nonnull Range range){
+    public Page<Task> getPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId, @Nonnull Range range){
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/pull-requests/%s/activities",
                 projectKey,
                 repositorySlug,
@@ -287,14 +288,14 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Set<Task> getAllRepositoryPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId) {
+    public Set<Task> getPullRequestsTasks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Long pullRequestId) {
         Range range = new Range(0, DEFAULT_LIMIT);
-        Page<Task> page = getRepositoryPullRequestsTasks(projectKey, repositorySlug, pullRequestId, range);
+        Page<Task> page = getPullRequestsTasks(projectKey, repositorySlug, pullRequestId, range);
         Set<Task> tasks = new HashSet<>(page.getSize());
         tasks.addAll(page.getValues());
         while(page.getNextPageStart()!=null){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            tasks.addAll( getRepositoryPullRequestsTasks(projectKey, repositorySlug, pullRequestId, range).getValues());
+            tasks.addAll( getPullRequestsTasks(projectKey, repositorySlug, pullRequestId, range).getValues());
         }
         return tasks;
     }
@@ -308,7 +309,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Set<User> getAllUsers() {
+    public Set<User> getUsers() {
         Range range = new Range(0, DEFAULT_LIMIT);
         Page<User> page = getUsers(range);
         Set<User> users = new HashSet<>(page.getSize());
