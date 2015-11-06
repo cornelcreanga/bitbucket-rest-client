@@ -135,20 +135,26 @@ public interface ProjectClient {
      * Returns a page of pull requests (between Range.start and Range.start+Range.limit)  associated with a project/repository, with the specified state
      * @param projectKey project key
      * @param repositorySlug repository slug
-     * @param pullRequestState pullRequest state; null means all the states
+     * @param incoming the direction relative to the specified repository (true=INCOMING false=OUTGOING).
+     * @param branchId (optional) a fully-qualified branch ID to find pull requests to or from
+     * @param pullRequestState (optional) pullRequest state; null means all the states
      * @param range limit object
      * @return a Page of PullRequests
      */
-    Page<PullRequest> getPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, PullRequestState pullRequestState, @Nonnull Range range);
+    Page<PullRequest> getPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug,PullRequestState pullRequestState, boolean incoming,
+                                      String branchId,  @Nonnull Range range);
 
     /**
      * Returns all the pull requests associated with a project/repository, with the specified state
      * @param projectKey project key
      * @param repositorySlug repository slug
+     * @param incoming the direction relative to the specified repository (true=INCOMING false=OUTGOING).
+     * @param branchId (optional) a fully-qualified branch ID to find pull requests to or from
      * @param pullRequestState pullRequest state; null means all the states
      * @return a Set of PullRequests
      */
-    Set<PullRequest> getPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug, PullRequestState pullRequestState);
+    Set<PullRequest> getPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug,PullRequestState pullRequestState, boolean incoming,
+                                     String branchId);
     /**
      * Returns a page of changes (between Range.start and Range.start+Range.limit)  associated with a project/repository/pull request
      * @param projectKey project key
