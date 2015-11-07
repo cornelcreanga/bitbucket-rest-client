@@ -60,10 +60,10 @@ abstract class BitBucketClient {
         return "";
     }
 
-    protected Optional<JsonElement> execute(String requestUrl, HttpMethod method, JsonObject requestJson, boolean anonymous) {
+    protected Optional<JsonElement> execute(String requestUrl, HttpMethod method, JsonObject requestJson) {
 
         String requestData = requestJson != null ? requestJson.toString() : null;
-        HttpResponse response = bitBucketHttpExecutor.execute(new HttpRequest(requestUrl, method, requestData, anonymous));
+        HttpResponse response = bitBucketHttpExecutor.execute(new HttpRequest(requestUrl, method, requestData));
 
         String responseString = response.getBody();
         LOGGER.trace(String.format("doRestCall response: code=%d; response='%s'", response.getStatusCode(), responseString));

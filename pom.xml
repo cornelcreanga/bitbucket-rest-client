@@ -55,7 +55,7 @@
 
 
     <properties>
-        <httpclient.version>4.2.5</httpclient.version>
+        <httpclient.version>4.5.1</httpclient.version>
         <jsr305.version>3.0.0</jsr305.version>
         <guava.version>18.0</guava.version>
         <jackson.version>1.9.13</jackson.version>

@@ -21,13 +21,11 @@ class HttpRequest {
     private String url;
     private HttpMethod method;
     private String payload;
-    private boolean anonymous;
 
-    public HttpRequest(String url, HttpMethod method, String payload, boolean anonymous) {
+    public HttpRequest(String url, HttpMethod method, String payload) {
         this.url = url;
         this.method = method;
         this.payload = payload;
-        this.anonymous = anonymous;
     }
 
     public String getUrl() {
@@ -42,7 +40,4 @@ class HttpRequest {
         return payload;
     }
 
-    public boolean isAnonymous() {
-        return anonymous;
-    }
 }
