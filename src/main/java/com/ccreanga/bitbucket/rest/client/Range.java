@@ -21,7 +21,6 @@ public class Range {
 
     private int start;
     private int limit;
-    public static Range ALL = new Range(0,Integer.MAX_VALUE);
 
     public Range(int start, int limit) {
         if (start < 0)

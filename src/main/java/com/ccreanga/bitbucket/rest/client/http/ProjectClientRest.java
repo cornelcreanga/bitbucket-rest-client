@@ -66,9 +66,10 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         Page<Project> page = getProjects(range);
         Set<Project> projects = new HashSet<>(page.getSize());
         projects.addAll(page.getValues());
-        while(page.getNextPageStart()!=null){
+        while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            projects.addAll(getProjects(range).getValues());
+            page = getProjects(range);
+            projects.addAll(page.getValues());
         }
         return projects;
     }
@@ -97,9 +98,10 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         Page<Repository> page = getProjectRepositories(projectKey,range);
         Set<Repository> repositories = new HashSet<>(page.getSize());
         repositories.addAll(page.getValues());
-        while(page.getNextPageStart()!=null){
+        while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            repositories.addAll(getProjectRepositories(projectKey, range).getValues());
+            page = getProjectRepositories(projectKey, range);
+            repositories.addAll(page.getValues());
         }
         return repositories;
     }
@@ -117,9 +119,10 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         Page<Repository> page = getAllRepositories(range);
         Set<Repository> repositories = new HashSet<>(page.getSize());
         repositories.addAll(page.getValues());
-        while(page.getNextPageStart()!=null){
+        while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            repositories.addAll(getAllRepositories(range).getValues());
+            page = getAllRepositories(range);
+            repositories.addAll(page.getValues());
         }
         return repositories;
     }
@@ -157,9 +160,10 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         Page<Branch> page = getBranches(projectKey, repositorySlug, query, range);
         Set<Branch> branches = new HashSet<>(page.getSize());
         branches.addAll(page.getValues());
-        while(page.getNextPageStart()!=null){
+        while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            branches.addAll( getBranches(projectKey, repositorySlug, query, range).getValues());
+            page = getBranches(projectKey, repositorySlug, query, range);
+            branches.addAll( page.getValues());
         }
         return branches;
     }
@@ -178,9 +182,10 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         Page<Repository> page = getForks(projectKey, repositorySlug, range);
         Set<Repository> repositories = new HashSet<>(page.getSize());
         repositories.addAll(page.getValues());
-        while(page.getNextPageStart()!=null){
+        while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            repositories.addAll( getForks(projectKey, repositorySlug, range).getValues());
+            page = getForks(projectKey, repositorySlug, range);
+            repositories.addAll( page.getValues());
         }
         return repositories;
     }
@@ -229,7 +234,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         Page<PullRequest> page = getPullRequests(projectKey, repositorySlug, pullRequestState,incoming,branchId, range);
         Set<PullRequest> pullRequests = new HashSet<>(page.getSize());
         pullRequests.addAll(page.getValues());
-        while(page.getNextPageStart()!=null){
+        while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
             pullRequests.addAll( getPullRequests(projectKey, repositorySlug, pullRequestState,incoming,branchId, range).getValues());
         }
@@ -260,9 +265,10 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         Page<PullRequestChange> page = getPullRequestsChanges(projectKey, repositorySlug, pullRequestId, sinceCommitId, range);
         Set<PullRequestChange> pullRequestChanges = new HashSet<>(page.getSize());
         pullRequestChanges.addAll(page.getValues());
-        while(page.getNextPageStart()!=null){
+        while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            pullRequestChanges.addAll( getPullRequestsChanges(projectKey, repositorySlug, pullRequestId, sinceCommitId, range).getValues());
+            page = getPullRequestsChanges(projectKey, repositorySlug, pullRequestId, sinceCommitId, range);
+            pullRequestChanges.addAll( page.getValues());
         }
         return pullRequestChanges;
     }
@@ -284,9 +290,10 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         Page<PullRequestActivity> page = getPullRequestsActivities(projectKey, repositorySlug, pullRequestId, range);
         Set<PullRequestActivity> pullRequestActivities = new HashSet<>(page.getSize());
         pullRequestActivities.addAll(page.getValues());
-        while(page.getNextPageStart()!=null){
+        while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            pullRequestActivities.addAll( getPullRequestsActivities(projectKey, repositorySlug, pullRequestId, range).getValues());
+            page = getPullRequestsActivities(projectKey, repositorySlug, pullRequestId, range);
+            pullRequestActivities.addAll( page.getValues());
         }
         return pullRequestActivities;
     }
@@ -308,9 +315,10 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         Page<Task> page = getPullRequestsTasks(projectKey, repositorySlug, pullRequestId, range);
         Set<Task> tasks = new HashSet<>(page.getSize());
         tasks.addAll(page.getValues());
-        while(page.getNextPageStart()!=null){
+        while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            tasks.addAll( getPullRequestsTasks(projectKey, repositorySlug, pullRequestId, range).getValues());
+            page = getPullRequestsTasks(projectKey, repositorySlug, pullRequestId, range);
+            tasks.addAll( page.getValues());
         }
         return tasks;
     }
@@ -329,9 +337,10 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         Page<User> page = getUsers(range);
         Set<User> users = new HashSet<>(page.getSize());
         users.addAll(page.getValues());
-        while(page.getNextPageStart()!=null){
+        while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            users.addAll(getUsers(range).getValues());
+            page = getUsers(range);
+            users.addAll(page.getValues());
         }
         return users;
     }
