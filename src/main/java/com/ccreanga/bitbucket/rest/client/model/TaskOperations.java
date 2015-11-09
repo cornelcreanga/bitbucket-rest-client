@@ -17,9 +17,11 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class TaskOperations{
+public class TaskOperations implements Serializable
+{
 
     private boolean editable;
     private boolean deletable;

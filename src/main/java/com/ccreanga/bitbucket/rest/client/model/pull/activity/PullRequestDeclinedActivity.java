@@ -19,6 +19,7 @@ package com.ccreanga.bitbucket.rest.client.model.pull.activity;
 
 import com.ccreanga.bitbucket.rest.client.model.User;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 

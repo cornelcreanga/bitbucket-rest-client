@@ -17,6 +17,8 @@
 
 package com.ccreanga.bitbucket.rest.client.model.pull;
 
-public enum PullRequestRole {
+import java.io.Serializable;
+
+public enum PullRequestRole implements Serializable {
     AUTHOR, REVIEWER, PARTICIPANT
 }

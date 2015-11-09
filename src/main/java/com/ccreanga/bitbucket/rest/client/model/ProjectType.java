@@ -17,6 +17,8 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
-public enum ProjectType {
+import java.io.Serializable;
+
+public enum ProjectType implements Serializable {
     NORMAL,PERSONAL
 }

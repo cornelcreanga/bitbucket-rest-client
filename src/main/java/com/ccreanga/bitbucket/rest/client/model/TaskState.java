@@ -17,6 +17,8 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
-public enum TaskState {
+import java.io.Serializable;
+
+public enum TaskState implements Serializable {
     OPEN,RESOLVED
 }

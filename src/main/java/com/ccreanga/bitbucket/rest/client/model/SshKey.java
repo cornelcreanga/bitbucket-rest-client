@@ -17,10 +17,12 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
+import java.io.Serializable;
+
 /**
  * Generic representation of SSH public key
  */
-public class SshKey {
+public class SshKey implements Serializable {
     protected long id;
     protected String text;
     protected String label;

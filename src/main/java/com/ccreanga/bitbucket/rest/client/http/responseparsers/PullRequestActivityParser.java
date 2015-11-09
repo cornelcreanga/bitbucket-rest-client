@@ -109,6 +109,13 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
                     userParser().apply(json.getAsJsonObject("user"))
             );
         }
+        else if (actionType == PullRequestActivityActionType.UNAPPROVED) {
+            return new PullRequestUnapprovedActivity(
+                    json.get("id").getAsLong(),
+                    new Date(json.get("createdDate").getAsLong()),
+                    userParser().apply(json.getAsJsonObject("user"))
+            );
+        }
         else if (actionType == PullRequestActivityActionType.OPENED) {
             return new PullRequestOpenedActivity(
                     json.get("id").getAsLong(),

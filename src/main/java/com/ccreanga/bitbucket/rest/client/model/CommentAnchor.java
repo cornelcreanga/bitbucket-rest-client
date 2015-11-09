@@ -18,9 +18,10 @@
 package com.ccreanga.bitbucket.rest.client.model;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class CommentAnchor {
+public class CommentAnchor implements Serializable {
 
     private String fromHash;
     @Nonnull

@@ -19,11 +19,12 @@ package com.ccreanga.bitbucket.rest.client.model;
 
 import com.google.common.collect.ImmutableList;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class Comment {
+public class Comment implements Serializable {
 
     private long id;
     private long version;

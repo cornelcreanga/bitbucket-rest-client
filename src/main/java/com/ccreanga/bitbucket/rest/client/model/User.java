@@ -17,7 +17,9 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private long id;
     private String name;

@@ -17,9 +17,10 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class PermittedOperations {
+public class PermittedOperations implements Serializable {
 
     private boolean editable;
     private boolean deletable;

@@ -17,9 +17,10 @@
 
 package com.ccreanga.bitbucket.rest.client.model.pull;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class PullRequestBranch {
+public class PullRequestBranch  implements Serializable {
 
     private String id;
     private String repositorySlug;

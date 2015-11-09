@@ -17,7 +17,9 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
-public enum UserType {
+import java.io.Serializable;
+
+public enum UserType implements Serializable {
 
     NORMAL,SERVICE
 }

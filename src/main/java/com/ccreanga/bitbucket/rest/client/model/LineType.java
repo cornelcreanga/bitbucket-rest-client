@@ -17,6 +17,8 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
-public enum LineType {
+import java.io.Serializable;
+
+public enum LineType implements Serializable {
     ADDED,REMOVED,CONTEXT;
 }

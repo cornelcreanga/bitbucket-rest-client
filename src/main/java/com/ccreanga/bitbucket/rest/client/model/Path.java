@@ -18,10 +18,11 @@
 package com.ccreanga.bitbucket.rest.client.model;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Path {
+public class Path implements Serializable {
 
     private String[] components;
 

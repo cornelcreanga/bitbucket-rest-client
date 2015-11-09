@@ -18,10 +18,11 @@
 package com.ccreanga.bitbucket.rest.client.model.diff;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class DiffSegment {
+public class DiffSegment  implements Serializable {
 
     @Nonnull
     private List<DiffLine> lines;

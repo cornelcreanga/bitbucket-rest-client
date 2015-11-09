@@ -19,10 +19,11 @@ package com.ccreanga.bitbucket.rest.client.model;
 
 import com.google.common.collect.ImmutableList;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Commit {
+public class Commit implements Serializable {
 
     private String id;
     private String displayId;

@@ -17,7 +17,9 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
-public class Branch {
+import java.io.Serializable;
+
+public class Branch implements Serializable {
     private String id;
     private String displayId;
     private String latestChangeset;

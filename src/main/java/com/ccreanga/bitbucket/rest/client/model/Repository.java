@@ -18,12 +18,13 @@
 package com.ccreanga.bitbucket.rest.client.model;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Describes a repository
  */
-public class Repository {
+public class Repository implements Serializable {
     private String hierarchyId;
     private long id;
     private String slug;

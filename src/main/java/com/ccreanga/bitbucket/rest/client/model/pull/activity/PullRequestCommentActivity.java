@@ -22,6 +22,7 @@ import com.ccreanga.bitbucket.rest.client.model.CommentAnchor;
 import com.ccreanga.bitbucket.rest.client.model.diff.Diff;
 import com.ccreanga.bitbucket.rest.client.model.User;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 

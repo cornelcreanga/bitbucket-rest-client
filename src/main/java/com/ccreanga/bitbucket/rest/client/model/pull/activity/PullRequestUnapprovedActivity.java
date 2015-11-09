@@ -19,14 +19,12 @@ package com.ccreanga.bitbucket.rest.client.model.pull.activity;
 
 import com.ccreanga.bitbucket.rest.client.model.User;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class PullRequestMergeActivity extends PullRequestActivity{
+public class PullRequestUnapprovedActivity extends PullRequestActivity{
 
-
-    public PullRequestMergeActivity(Long id, Date createdDate, User user) {
+    public PullRequestUnapprovedActivity(Long id, Date createdDate, User user) {
         this.id = id;
         this.createdDate = createdDate;
         this.user = user;
@@ -37,7 +35,7 @@ public class PullRequestMergeActivity extends PullRequestActivity{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PullRequestMergeActivity that = (PullRequestMergeActivity) o;
+        PullRequestUnapprovedActivity that = (PullRequestUnapprovedActivity) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(createdDate, that.createdDate) &&
                 Objects.equals(user, that.user) &&
@@ -51,11 +49,13 @@ public class PullRequestMergeActivity extends PullRequestActivity{
 
     @Override
     public String toString() {
-        return "PullRequestMergeActivity{" +
+        return "PullRequestUnapprovedActivity{" +
                 "id=" + id +
                 ", createdDate=" + createdDate +
                 ", user=" + user +
                 ", actionType=" + actionType +
                 '}';
     }
+
 }
+

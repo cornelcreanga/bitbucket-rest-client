@@ -19,7 +19,9 @@ package com.ccreanga.bitbucket.rest.client.model.pull;
 
 import com.ccreanga.bitbucket.rest.client.model.User;
 
-public class PullRequestParticipant {
+import java.io.Serializable;
+
+public class PullRequestParticipant implements Serializable {
 
     private User user;
     private PullRequestRole role;

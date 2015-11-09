@@ -17,6 +17,8 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
-public enum FileType {
+import java.io.Serializable;
+
+public enum FileType implements Serializable {
     FROM,TO
 }

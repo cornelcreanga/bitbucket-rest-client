@@ -17,7 +17,9 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
-public enum NodeType {
+import java.io.Serializable;
+
+public enum NodeType implements Serializable {
 
     FILE
 }

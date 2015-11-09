@@ -18,8 +18,9 @@
 package com.ccreanga.bitbucket.rest.client.model;
 
 import javax.annotation.Nullable;
+import java.io.Serializable;
 
-public class Project {
+public class Project implements Serializable {
     private String key;
     private long id;
     private String name;

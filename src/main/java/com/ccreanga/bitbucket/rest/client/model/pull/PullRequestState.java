@@ -17,6 +17,8 @@
 
 package com.ccreanga.bitbucket.rest.client.model.pull;
 
-public enum PullRequestState {
+import java.io.Serializable;
+
+public enum PullRequestState implements Serializable {
     OPEN, DECLINED, MERGED
 }

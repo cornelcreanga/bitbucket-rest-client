@@ -17,10 +17,11 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Serializable {
 
     private long id;
     private TaskState taskState;

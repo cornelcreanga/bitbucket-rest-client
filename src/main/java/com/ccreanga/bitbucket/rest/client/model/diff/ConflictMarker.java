@@ -17,7 +17,9 @@
 
 package com.ccreanga.bitbucket.rest.client.model.diff;
 
-public enum ConflictMarker {
+import java.io.Serializable;
+
+public enum ConflictMarker  implements Serializable {
 
     MARKER,OURS,THEIRS
 

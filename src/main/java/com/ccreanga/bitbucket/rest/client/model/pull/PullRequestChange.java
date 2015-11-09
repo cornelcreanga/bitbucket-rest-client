@@ -21,9 +21,10 @@ import com.ccreanga.bitbucket.rest.client.model.FileChangeType;
 import com.ccreanga.bitbucket.rest.client.model.NodeType;
 import com.ccreanga.bitbucket.rest.client.model.Path;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class PullRequestChange {
+public class PullRequestChange implements Serializable {
 
     private String contentId;
     private String fromContentId;

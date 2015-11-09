@@ -17,7 +17,9 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
-public enum FileChangeType {
+import java.io.Serializable;
+
+public enum FileChangeType implements Serializable {
 
     MOVE,MODIFY,ADD
 }

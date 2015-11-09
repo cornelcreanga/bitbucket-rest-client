@@ -21,11 +21,12 @@ import com.ccreanga.bitbucket.rest.client.model.Commit;
 import com.ccreanga.bitbucket.rest.client.model.User;
 import com.google.common.collect.ImmutableList;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class PullRequestRescopeActivity extends PullRequestActivity {
+public class PullRequestRescopeActivity extends PullRequestActivity{
 
     private String fromHash;
     private String previousFromHash;

@@ -21,12 +21,13 @@ import com.google.common.collect.ImmutableList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Generic Page class containing a list of values
  */
-public class Page<T> {
+public class Page<T> implements Serializable {
     private int size;
     private int limit;
     private boolean lastPage;

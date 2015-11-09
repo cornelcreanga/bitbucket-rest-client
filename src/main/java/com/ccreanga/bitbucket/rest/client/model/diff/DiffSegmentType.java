@@ -17,7 +17,9 @@
 
 package com.ccreanga.bitbucket.rest.client.model.diff;
 
-public enum DiffSegmentType {
+import java.io.Serializable;
+
+public enum DiffSegmentType  implements Serializable {
 
     ADDED,CONTEXT,REMOVED
 

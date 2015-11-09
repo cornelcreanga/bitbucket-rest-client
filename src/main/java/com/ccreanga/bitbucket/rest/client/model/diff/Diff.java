@@ -21,10 +21,11 @@ import com.ccreanga.bitbucket.rest.client.model.Path;
 import com.google.common.collect.ImmutableList;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Diff {
+public class Diff  implements Serializable {
 
     private Path destination;
     @Nonnull

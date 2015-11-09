@@ -17,6 +17,8 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
-public enum RepositoryState {
+import java.io.Serializable;
+
+public enum RepositoryState implements Serializable {
     AVAILABLE,INITIALISING,INITIALISATION_FAILED
     }
