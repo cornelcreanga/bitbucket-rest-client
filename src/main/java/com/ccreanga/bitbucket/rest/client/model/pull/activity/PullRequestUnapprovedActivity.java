@@ -28,7 +28,7 @@ public class PullRequestUnapprovedActivity extends PullRequestActivity{
         this.id = id;
         this.createdDate = createdDate;
         this.user = user;
-        this.actionType = PullRequestActivityActionType.MERGED;
+        this.actionType = PullRequestActivityActionType.UNAPPROVED;
     }
 
     @Override

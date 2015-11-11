@@ -29,7 +29,7 @@ public class PullRequestDeclinedActivity extends PullRequestActivity{
         this.id = id;
         this.createdDate = createdDate;
         this.user = user;
-        this.actionType = PullRequestActivityActionType.MERGED;
+        this.actionType = PullRequestActivityActionType.DECLINED;
     }
 
     @Override
