@@ -44,4 +44,33 @@ public abstract class PullRequestActivity implements Serializable {
     public PullRequestActivityActionType getActionType() {
         return actionType;
     }
+
+    public boolean isComment(){
+        return  actionType.equals(PullRequestActivityActionType.COMMENTED);
+    }
+    public boolean isRescope(){
+        return  actionType.equals(PullRequestActivityActionType.RESCOPED);
+    }
+    public boolean isMerge(){
+        return  actionType.equals(PullRequestActivityActionType.MERGED);
+    }
+    public boolean isApprove(){
+        return  actionType.equals(PullRequestActivityActionType.APPROVED);
+    }
+    public boolean isDecline(){
+        return  actionType.equals(PullRequestActivityActionType.DECLINED);
+    }
+    public boolean isOpen(){
+        return  actionType.equals(PullRequestActivityActionType.OPENED);
+    }
+    public boolean isReopen(){
+        return  actionType.equals(PullRequestActivityActionType.REOPENED);
+    }
+    public boolean isUnapprove(){
+        return  actionType.equals(PullRequestActivityActionType.UNAPPROVED);
+    }
+    public boolean isUpdate(){
+        return  actionType.equals(PullRequestActivityActionType.UPDATED);
+    }
+
 }
