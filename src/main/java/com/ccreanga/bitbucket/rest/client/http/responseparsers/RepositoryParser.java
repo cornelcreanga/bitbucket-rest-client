@@ -48,17 +48,20 @@ class RepositoryParser implements Function<JsonElement, Repository> {
         String selfUrl = null;
 
         if (json.has("links")) {
-            selfUrl = linkParser("url","text").apply(json.getAsJsonObject("links").get("self").getAsJsonArray().get(0)).getHref();
+            JsonObject links = json.getAsJsonObject("links");
+            selfUrl = linkParser("url","text").apply(links.get("self").getAsJsonArray().get(0)).getHref();
 
-            JsonArray arrayCloneLinks = json.getAsJsonObject("links").get("clone").getAsJsonArray();
-            Link first = linkParser().apply(arrayCloneLinks.get(0));
-            Link second = linkParser().apply(arrayCloneLinks.get(1));
-            if (first.getName().equals("http")){
-                httpCloneUrl = first.getHref();
-                sshCloneUrl = second.getHref();
-            }else{
-                sshCloneUrl = first.getHref();
-                httpCloneUrl = second.getHref();
+            if (links.has("clone")) {
+                JsonArray arrayCloneLinks = links.get("clone").getAsJsonArray();
+                Link first = linkParser().apply(arrayCloneLinks.get(0));
+                Link second = linkParser().apply(arrayCloneLinks.get(1));
+                if (first.getName().equals("http")) {
+                    httpCloneUrl = first.getHref();
+                    sshCloneUrl = second.getHref();
+                } else {
+                    sshCloneUrl = first.getHref();
+                    httpCloneUrl = second.getHref();
+                }
             }
         }
 
