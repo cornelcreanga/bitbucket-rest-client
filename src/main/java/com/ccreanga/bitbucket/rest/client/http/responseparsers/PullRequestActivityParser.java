@@ -53,28 +53,12 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
             List<Commit> added = new ArrayList<>();
             List<Commit> removed = new ArrayList<>();
             if (json.has("added")) {
-                JsonObject addedJson= json.get("added").getAsJsonObject();
-                if (addedJson.has("changesets")) {
-                    List<Commit> changesets = listParser(commitParser()).apply(addedJson.get("changesets"));
-                    added.addAll(changesets);
-                }
-
-                if (addedJson.has("commits")) {
-                    List<Commit> changesets = listParser(commitParser()).apply(addedJson.get("commits"));
-                    added.addAll(changesets);
-                }
+                added = getCommits(json.get("added").getAsJsonObject());
             }
             if (json.has("removed")) {
-                JsonObject removedJson= json.get("removed").getAsJsonObject();
-                if (removedJson.has("changesets")) {
-                    List<Commit> changesets = listParser(commitParser()).apply(removedJson.get("changesets"));
-                    removed.addAll(changesets);
-                }
-                if (removedJson.has("commits")) {
-                    List<Commit> changesets = listParser(commitParser()).apply(removedJson.get("commits"));
-                    removed.addAll(changesets);
-                }
+                removed = getCommits(json.get("removed").getAsJsonObject());
             }
+
             return new PullRequestRescopeActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
@@ -125,5 +109,17 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
         } else
             throw new RuntimeException("cannot parse action:" + actionType);
 
+    }
+
+
+    private List<Commit> getCommits(JsonObject json){
+        List<Commit> commits = new ArrayList<>();
+        if (json.has("changesets")) {
+            commits.addAll(listParser(commitParser()).apply(json.get("changesets")));
+        }
+        if (json.has("commits")) {
+            commits.addAll(listParser(commitParser()).apply(json.get("commits")));
+        }
+        return commits;
     }
 }
