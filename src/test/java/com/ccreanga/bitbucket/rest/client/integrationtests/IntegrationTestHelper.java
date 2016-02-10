@@ -35,11 +35,7 @@ public class IntegrationTestHelper {
 
 
     public IntegrationTestHelper() {
-        try {
-            factory = new BitBucketClientFactory(new URL(testServer),new BitBucketCredentials(testUser,testPassword));
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+        factory = new BitBucketClientFactory(testServer,new BitBucketCredentials(testUser,testPassword));
         projectClient = factory.getProjectClient();
     }
 

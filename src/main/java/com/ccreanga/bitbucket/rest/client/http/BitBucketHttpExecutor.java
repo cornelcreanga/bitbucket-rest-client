@@ -52,18 +52,17 @@ class BitBucketHttpExecutor {
 
     private static Logger LOGGER = LoggerFactory.getLogger(BitBucketHttpExecutor.class);
     private CloseableHttpClient httpClient;
-    private URL baseUrl;
-    private BasicHttpContext forceBasicAuthContext;
+    private String baseUrl;
+    private HttpClientContext context;
 
-    public BitBucketHttpExecutor(URL baseUrl, BitBucketCredentials credentials) {
+    public BitBucketHttpExecutor(String baseUrl, BitBucketCredentials credentials) {
         this.baseUrl = baseUrl;
 
-        String scheme = urlScheme(baseUrl.getProtocol());
-        int port = baseUrl.getPort() != -1 ? baseUrl.getPort() : (scheme.equals("https") ? 443 : 80);
-        HttpHost targetHost = new HttpHost(baseUrl.getHost(), port, scheme);
+        HttpHost targetHost = HttpHost.create(baseUrl);
         PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
         connectionManager.setMaxTotal(5);
         connectionManager.setDefaultMaxPerRoute(4);
+
 
         BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(
@@ -72,9 +71,12 @@ class BitBucketHttpExecutor {
         );
 
         AuthCache authCache = new BasicAuthCache();
-        authCache.put(targetHost, new BasicScheme());
-        forceBasicAuthContext = new BasicHttpContext();
-        forceBasicAuthContext.setAttribute(HttpClientContext.AUTH_CACHE, authCache);
+        BasicScheme basicAuth = new BasicScheme();
+        authCache.put(targetHost, basicAuth);
+
+        context = HttpClientContext.create();
+        context.setCredentialsProvider(credentialsProvider);
+        context.setAuthCache(authCache);
 
         httpClient =
                 HttpClients.custom().
@@ -95,7 +97,7 @@ class BitBucketHttpExecutor {
         try {
             request = createRequest(httpRequest);
 
-            org.apache.http.HttpResponse response = httpClient.execute(request, forceBasicAuthContext);
+            org.apache.http.HttpResponse response = httpClient.execute(request, context);
             StatusLine status = response.getStatusLine();
             Map<String, String> headers = toHeaderMultimap(response.getAllHeaders());
 

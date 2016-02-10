@@ -215,9 +215,9 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         String state = pullRequestState==null?"ALL":pullRequestState.toString();
         String direction = incoming?"INCOMING":"OUTGOING";
         requestUrl+="&state="+state;
-        requestUrl+="&direction="+branchId;
+        requestUrl+="&direction="+direction;
         if (branchId!=null)
-            requestUrl+="&at="+direction;
+            requestUrl+="&at="+branchId;
 
         JsonElement jsonElement = execute(requestUrl, GET, null).get();
         return pageParser(pullRequestParser()).apply(jsonElement);

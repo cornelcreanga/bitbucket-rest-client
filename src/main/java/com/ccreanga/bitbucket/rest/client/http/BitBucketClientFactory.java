@@ -28,7 +28,7 @@ public class BitBucketClientFactory {
     private SshClient sshClient;
     private BitBucketHttpExecutor bitBucketHttpExecutor;
 
-    public BitBucketClientFactory(URL baseUrl, BitBucketCredentials credentials) {
+    public BitBucketClientFactory(String baseUrl, BitBucketCredentials credentials) {
         bitBucketHttpExecutor = new BitBucketHttpExecutor(baseUrl, credentials);
         projectClient = new ProjectClientRest(bitBucketHttpExecutor);
         sshClient = new SshClientRest(bitBucketHttpExecutor);
