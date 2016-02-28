@@ -86,12 +86,6 @@ class BitBucketHttpExecutor {
 
     }
 
-    private static String urlScheme(String url) {
-        if (url.toLowerCase().startsWith("https://"))
-            return "https";
-        return "http";
-    }
-
     public HttpResponse execute(HttpRequest httpRequest) throws BitBucketException {
         HttpRequestBase request;
         try {
