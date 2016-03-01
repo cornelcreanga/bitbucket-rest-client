@@ -2,6 +2,6 @@ language: java
 script:
   -  mvn clean test
 after_success:
-  -  mvn clean deploy -DskipITs=true --settings maven_deploy_settings.xml
+  -  mvn deploy -DskipITs=true --settings maven_deploy_settings.xml
 jdk:
 - oraclejdk8
