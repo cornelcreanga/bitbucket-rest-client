@@ -21,12 +21,11 @@ import com.ccreanga.bitbucket.rest.client.model.Commit;
 import com.ccreanga.bitbucket.rest.client.model.User;
 import com.google.common.collect.ImmutableList;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class PullRequestRescopeActivity extends PullRequestActivity{
+public class PullRequestRescopedActivity extends PullRequestActivity{
 
     private String fromHash;
     private String previousFromHash;
@@ -36,7 +35,7 @@ public class PullRequestRescopeActivity extends PullRequestActivity{
     private List<Commit> added;
     private List<Commit> removed;
 
-    public PullRequestRescopeActivity(Long id, Date createdDate, User user, String fromHash, String previousFromHash, String previousToHash, String toHash, List<Commit> added, List<Commit> removed) {
+    public PullRequestRescopedActivity(Long id, Date createdDate, User user, String fromHash, String previousFromHash, String previousToHash, String toHash, List<Commit> added, List<Commit> removed) {
         this.id = id;
         this.createdDate = createdDate;
         this.user = user;
@@ -77,7 +76,7 @@ public class PullRequestRescopeActivity extends PullRequestActivity{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PullRequestRescopeActivity that = (PullRequestRescopeActivity) o;
+        PullRequestRescopedActivity that = (PullRequestRescopedActivity) o;
         return Objects.equals(fromHash, that.fromHash) &&
                 Objects.equals(previousFromHash, that.previousFromHash) &&
                 Objects.equals(previousToHash, that.previousToHash) &&
@@ -97,7 +96,7 @@ public class PullRequestRescopeActivity extends PullRequestActivity{
 
     @Override
     public String toString() {
-        return "PullRequestRescopeActivity{" +
+        return "PullRequestRescopedActivity{" +
                 "fromHash='" + fromHash + '\'' +
                 ", previousFromHash='" + previousFromHash + '\'' +
                 ", previousToHash='" + previousToHash + '\'' +

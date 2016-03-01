@@ -59,7 +59,7 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
                 removed = getCommits(json.get("removed").getAsJsonObject());
             }
 
-            return new PullRequestRescopeActivity(
+            return new PullRequestRescopedActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
                     userParser().apply(json.getAsJsonObject("user")),
@@ -73,7 +73,7 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
 
         }
         else if (actionType == PullRequestActivityActionType.MERGED) {
-            return new PullRequestMergeActivity(
+            return new PullRequestMergedActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
                     userParser().apply(json.getAsJsonObject("user"))

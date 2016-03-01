@@ -26,8 +26,8 @@ import com.ccreanga.bitbucket.rest.client.model.MinimalCommit;
 import com.ccreanga.bitbucket.rest.client.model.PermittedOperations;
 import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestActivity;
 import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestCommentActivity;
-import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestMergeActivity;
-import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestRescopeActivity;
+import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestMergedActivity;
+import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestRescopedActivity;
 import com.ccreanga.bitbucket.rest.client.model.User;
 import com.ccreanga.bitbucket.rest.client.model.UserType;
 import com.google.gson.JsonElement;
@@ -47,7 +47,7 @@ public class PullRequestActivityParserTest{
     @Test
     public void testApplyMerged() throws Exception {
         PullRequestActivityParser pullRequestActivityParser = new PullRequestActivityParser();
-        PullRequestActivity pullRequestActivity = new PullRequestMergeActivity(101l,new Date(1359085920l),new User(101,"jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL));
+        PullRequestActivity pullRequestActivity = new PullRequestMergedActivity(101l,new Date(1359085920l),new User(101,"jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL));
 
         JsonElement element = new JsonParser().parse(TestUtil.loadString("pull_requests_activities_merged.json"));
         PullRequestActivity parsedPullRequestActivity = pullRequestActivityParser.apply(element);
@@ -111,7 +111,7 @@ public class PullRequestActivityParserTest{
         removed.add(new Commit("def0123abcdef4567abcdef8987abcdef6543abc","def0123abcd","charlie","charlie@example.com",1442553509807l,"More work on feature 1",minimalCommits));
         removed.add(new Commit("def0123abcdef4567abcdef8987abcdef6543abc","def0123abcd","charlie","charlie@example.com",1442553509156l,"More work on feature 1",minimalCommits));
 
-        PullRequestActivity pullRequestActivity = new PullRequestRescopeActivity(
+        PullRequestActivity pullRequestActivity = new PullRequestRescopedActivity(
                 101l,
                 new Date(1359065920),
                 new User(101,"jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL),
