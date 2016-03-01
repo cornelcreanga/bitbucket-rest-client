@@ -57,7 +57,7 @@
     <properties>
         <httpclient.version>4.5.1</httpclient.version>
         <jsr305.version>3.0.0</jsr305.version>
-        <guava.version>18.0</guava.version>
+        <guava.version>19.0</guava.version>
         <jackson.version>1.9.13</jackson.version>
         <gson.version>2.4</gson.version>
         <slf4j-api.version>1.7.12</slf4j-api.version>
@@ -72,7 +72,7 @@
 
 
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
-        <maven-source-plugin.version>2.4</maven-source-plugin.version>
+        <maven-source-plugin.version>3.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.4</nexus-staging-maven-plugin.version>
