@@ -7,16 +7,11 @@ import java.util.Objects;
 
 public class PullRequestReOpenedActivity extends PullRequestActivity{
 
-    protected Long id;
-    protected Date createdDate;
-    protected User user;
-    protected PullRequestActivityActionType actionType;
-
     public PullRequestReOpenedActivity(Long id, Date createdDate, User user) {
         this.id = id;
         this.createdDate = createdDate;
         this.user = user;
-        this.actionType = PullRequestActivityActionType.OPENED;
+        this.actionType = PullRequestActivityActionType.REOPENED;
     }
 
     @Override
