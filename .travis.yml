@@ -1,6 +1,6 @@
 language: java
 script:
-  -  mvn clean test
+  -  mvn clean install -B -V
 after_success:
   -  mvn deploy -DskipITs=true --settings maven_deploy_settings.xml
 jdk:
