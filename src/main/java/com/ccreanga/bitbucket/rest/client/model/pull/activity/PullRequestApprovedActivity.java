@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.Objects;
 
 public class PullRequestApprovedActivity extends PullRequestActivity{
+    protected PullRequestApprovedActivity() {
+    }
 
     public PullRequestApprovedActivity(Long id, Date createdDate, User user) {
         this.id = id;

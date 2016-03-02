@@ -35,6 +35,9 @@ public class PullRequestRescopedActivity extends PullRequestActivity{
     private List<Commit> added;
     private List<Commit> removed;
 
+    protected PullRequestRescopedActivity() {
+    }
+
     public PullRequestRescopedActivity(Long id, Date createdDate, User user, String fromHash, String previousFromHash, String previousToHash, String toHash, List<Commit> added, List<Commit> removed) {
         this.id = id;
         this.createdDate = createdDate;

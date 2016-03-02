@@ -33,7 +33,10 @@ public class PullRequestCommentActivity extends PullRequestActivity{
     private CommentAnchor commentAnchor;
     private Diff diff;
 
-    public PullRequestCommentActivity(Long id, Date createdDate, User user,String actionComment, Comment comment, CommentAnchor commentAnchor,Diff diff) {
+    protected PullRequestCommentActivity() {
+    }
+
+    public PullRequestCommentActivity(Long id, Date createdDate, User user, String actionComment, Comment comment, CommentAnchor commentAnchor, Diff diff) {
         this.actionComment = actionComment;
         this.comment = comment;
         this.commentAnchor = commentAnchor;

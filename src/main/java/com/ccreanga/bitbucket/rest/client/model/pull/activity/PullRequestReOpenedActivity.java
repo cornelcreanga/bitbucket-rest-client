@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Objects;
 
 public class PullRequestReOpenedActivity extends PullRequestActivity{
+    protected PullRequestReOpenedActivity() {
+    }
 
     public PullRequestReOpenedActivity(Long id, Date createdDate, User user) {
         this.id = id;

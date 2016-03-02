@@ -25,6 +25,10 @@ import java.util.Objects;
 
 public class PullRequestOpenedActivity extends PullRequestActivity{
 
+
+    protected PullRequestOpenedActivity() {
+    }
+
     public PullRequestOpenedActivity(Long id, Date createdDate, User user) {
         this.id = id;
         this.createdDate = createdDate;

@@ -24,6 +24,8 @@ import java.util.Objects;
 
 public class PullRequestMergedActivity extends PullRequestActivity{
 
+    protected PullRequestMergedActivity() {
+    }
 
     public PullRequestMergedActivity(Long id, Date createdDate, User user) {
         this.id = id;

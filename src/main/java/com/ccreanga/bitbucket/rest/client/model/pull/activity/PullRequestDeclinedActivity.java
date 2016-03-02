@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.Objects;
 
 public class PullRequestDeclinedActivity extends PullRequestActivity{
+    protected PullRequestDeclinedActivity() {
+    }
 
     public PullRequestDeclinedActivity(Long id, Date createdDate, User user) {
         this.id = id;

@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.Objects;
 
 public class PullRequestUnapprovedActivity extends PullRequestActivity{
+    protected PullRequestUnapprovedActivity() {
+    }
 
     public PullRequestUnapprovedActivity(Long id, Date createdDate, User user) {
         this.id = id;
