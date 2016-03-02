@@ -35,7 +35,10 @@ public class Comment implements Serializable {
     private List<Comment> comments;
     private PermittedOperations permittedOperations;
 
-    public Comment(long id, long version, String text, User author, Date created, Date updated,List<Comment> comments,PermittedOperations permittedOperations) {
+    private Comment() {
+    }
+
+    public Comment(long id, long version, String text, User author, Date created, Date updated, List<Comment> comments, PermittedOperations permittedOperations) {
         this.id = id;
         this.version = version;
         this.text = text;

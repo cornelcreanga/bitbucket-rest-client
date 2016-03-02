@@ -30,6 +30,9 @@ public class DiffSegment  implements Serializable {
     private DiffSegmentType type;
     private boolean truncated;
 
+    private DiffSegment() {
+    }
+
     public DiffSegment(@Nonnull List<DiffLine> lines, @Nonnull DiffSegmentType type, boolean truncated) {
         this.lines = lines;
         this.type = type;

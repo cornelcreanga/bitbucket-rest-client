@@ -46,6 +46,9 @@ public class Repository implements Serializable {
     @Nonnull
     private String statusMessage;
 
+    private Repository() {
+    }
+
     public Repository(String hierarchyId, long id, String slug, @Nonnull String name, boolean isPublic, boolean isFork, boolean isForkable,
                       String sshCloneUrl, String httpCloneUrl, String selfUrl, @Nonnull Project project, Repository origin,
                       @Nonnull String scmId, @Nonnull RepositoryState state, @Nonnull String statusMessage) {

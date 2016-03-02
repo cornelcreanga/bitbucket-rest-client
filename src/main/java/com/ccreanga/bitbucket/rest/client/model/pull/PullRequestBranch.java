@@ -27,6 +27,9 @@ public class PullRequestBranch  implements Serializable {
     private String repositoryName;
     private String projectKey;
 
+    private PullRequestBranch() {
+    }
+
     public PullRequestBranch(String id, String repositorySlug, String repositoryName, String projectKey) {
         this.id = id;
         this.repositorySlug = repositorySlug;

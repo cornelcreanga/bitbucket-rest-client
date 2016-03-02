@@ -23,6 +23,9 @@ public class Link implements Serializable {
     private String href;
     private String name;
 
+    private Link() {
+    }
+
     public Link(String href, String name) {
         this.href = href;
         this.name = name;

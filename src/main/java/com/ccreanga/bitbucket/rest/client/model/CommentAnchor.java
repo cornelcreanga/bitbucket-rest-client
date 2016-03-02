@@ -34,6 +34,9 @@ public class CommentAnchor implements Serializable {
     private String srcPath;
     private boolean orphaned;
 
+    private CommentAnchor() {
+    }
+
     public CommentAnchor(String fromHash, String toHash, long line, LineType lineType, FileType fileType, String path, String srcPath, boolean orphaned) {
         this.fromHash = fromHash;
         this.toHash = toHash;

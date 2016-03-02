@@ -34,6 +34,9 @@ public class DiffHunk  implements Serializable {
     private int sourceSpan;
     private boolean truncated;
 
+    private DiffHunk() {
+    }
+
     public DiffHunk(int destinationLine, int destinationSpan, @Nonnull List<DiffSegment> segments, int sourceLine, int sourceSpan, boolean truncated) {
         this.destinationLine = destinationLine;
         this.destinationSpan = destinationSpan;

@@ -37,6 +37,9 @@ public class PullRequestChange implements Serializable {
     private boolean srcExecutable;
     private String selfUrl;
 
+    private PullRequestChange() {
+    }
+
     public PullRequestChange(String contentId, String fromContentId, Path path, Path srcPath, FileChangeType type, boolean executable, int percentUnchanged, NodeType nodeType, boolean srcExecutable, String selfUrl) {
         this.contentId = contentId;
         this.fromContentId = fromContentId;

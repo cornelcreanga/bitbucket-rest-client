@@ -33,7 +33,10 @@ public class DiffLine  implements Serializable {
     private boolean conflicting;
     private boolean truncated;
 
-    public DiffLine(/**List<Long> commentIds, ConflictMarker conflictMarker,*/int destination, @Nonnull String line, int source, /**boolean conflicting,*/ boolean truncated) {
+    private DiffLine() {
+    }
+
+    public DiffLine(/**List<Long> commentIds, ConflictMarker conflictMarker,*/int destination, @Nonnull String line, int source, /**boolean conflicting,*/boolean truncated) {
 //        this.commentIds = ImmutableList.copyOf(commentIds);
 //        this.conflictMarker = conflictMarker;
         this.destination = destination;

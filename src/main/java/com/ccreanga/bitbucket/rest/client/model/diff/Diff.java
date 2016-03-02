@@ -34,6 +34,8 @@ public class Diff  implements Serializable {
     private boolean binary;
     private boolean truncated;
 
+    private Diff() {
+    }
 
     public Diff(Path destination, @Nonnull List<DiffHunk> hunks, Path source, boolean binary, boolean truncated) {
         this.destination = destination;

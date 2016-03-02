@@ -29,6 +29,9 @@ public class User implements Serializable {
     private String slug;
     private UserType type;
 
+    private User() {
+    }
+
     public User(long id, String name, String emailAddress, String displayName, boolean active, String slug, UserType type) {
         this.id = id;
         this.name = name;

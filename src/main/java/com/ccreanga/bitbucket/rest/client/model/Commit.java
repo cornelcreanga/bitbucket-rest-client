@@ -33,6 +33,9 @@ public class Commit implements Serializable {
     private String message;
     private List<MinimalCommit> parentsIds;
 
+    private Commit() {
+    }
+
     public Commit(String id, String displayId, String authorName, String authorEmail, long authorTimestamp, String message, List<MinimalCommit> parentsIds) {
         this.id = id;
         this.displayId = displayId;

@@ -26,6 +26,8 @@ public class Path implements Serializable {
 
     private String[] components;
 
+    private Path() {
+    }
 
     public Path(String[] components) {
         this.components = Arrays.copyOf(components,components.length);

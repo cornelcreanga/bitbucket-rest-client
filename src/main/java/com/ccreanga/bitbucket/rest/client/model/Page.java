@@ -37,6 +37,9 @@ public class Page<T> implements Serializable {
     @Nonnull
     private List<T> values;
 
+    private Page() {
+    }
+
     public Page(int size, int limit, boolean lastPage, int start, @Nullable Integer nextPageStart, @Nonnull Iterable<T> values) {
         if ((!lastPage) && (nextPageStart==null))
             throw new IllegalArgumentException("nextPageStart should be not null if lastPage is false");

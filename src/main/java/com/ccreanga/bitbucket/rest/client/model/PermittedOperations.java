@@ -25,6 +25,9 @@ public class PermittedOperations implements Serializable {
     private boolean editable;
     private boolean deletable;
 
+    private PermittedOperations() {
+    }
+
     public PermittedOperations(boolean editable, boolean deletable) {
         this.editable = editable;
         this.deletable = deletable;

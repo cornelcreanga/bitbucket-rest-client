@@ -24,6 +24,9 @@ public class MinimalCommit implements Serializable {
     private String id;
     private String displayId;
 
+    private MinimalCommit() {
+    }
+
     public MinimalCommit(String id, String displayId) {
         this.id = id;
         this.displayId = displayId;

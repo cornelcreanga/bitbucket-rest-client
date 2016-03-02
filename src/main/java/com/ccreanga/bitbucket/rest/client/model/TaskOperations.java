@@ -27,6 +27,9 @@ public class TaskOperations implements Serializable
     private boolean deletable;
     private boolean transitionable;
 
+    private TaskOperations() {
+    }
+
     public TaskOperations(boolean editable, boolean deletable, boolean transitionable) {
         this.editable = editable;
         this.deletable = deletable;

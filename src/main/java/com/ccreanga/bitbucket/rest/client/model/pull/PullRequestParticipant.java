@@ -27,6 +27,9 @@ public class PullRequestParticipant implements Serializable {
     private PullRequestRole role;
     private boolean approved;
 
+    private PullRequestParticipant() {
+    }
+
     public PullRequestParticipant(User user, PullRequestRole role, boolean approved) {
         this.user = user;
         this.role = role;

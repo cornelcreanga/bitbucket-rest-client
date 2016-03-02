@@ -24,6 +24,7 @@ public class RepositorySshKey extends SshKey {
     private Repository repository;
     private String permission;
 
+
     public RepositorySshKey(long id, String text, String label, Repository repository, String permission) {
         super(text, label, id);
         this.repository = repository;

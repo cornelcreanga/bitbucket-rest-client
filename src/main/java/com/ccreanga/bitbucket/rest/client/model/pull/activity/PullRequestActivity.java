@@ -29,6 +29,9 @@ public abstract class PullRequestActivity implements Serializable {
     protected User user;
     protected PullRequestActivityActionType actionType;
 
+    protected PullRequestActivity() {
+    }
+
     public Long getId() {
         return id;
     }

@@ -54,6 +54,9 @@ public class PullRequest  implements Serializable {
 
     private String selfUrl;
 
+    private PullRequest() {
+    }
+
     public PullRequest(long id, long version, String title, String description, PullRequestState state,
                        boolean open, boolean closed, Date createdDate, Date updatedDate, PullRequestBranch from, PullRequestBranch to, boolean locked,
                        PullRequestParticipant author, List<PullRequestParticipant> reviewers, List<PullRequestParticipant> participants,

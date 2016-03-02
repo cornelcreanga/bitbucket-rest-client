@@ -31,6 +31,9 @@ public class Task implements Serializable {
     private User user;
     private TaskOperations taskOperations;
 
+    private Task() {
+    }
+
     public Task(long id, TaskState taskState, String text, Date created, Comment comment, User user, TaskOperations taskOperations) {
         this.id = id;
         this.taskState = taskState;

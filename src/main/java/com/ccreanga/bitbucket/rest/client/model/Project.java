@@ -31,6 +31,9 @@ public class Project implements Serializable {
     private ProjectType type;
     private String selfUrl;
 
+    private Project() {
+    }
+
     public Project(String key, long id, String name, @Nullable String description, boolean isPublic, boolean isPersonal, ProjectType type, String selfUrl) {
         this.key = key;
         this.id = id;

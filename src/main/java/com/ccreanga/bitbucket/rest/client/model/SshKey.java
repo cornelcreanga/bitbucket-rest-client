@@ -27,6 +27,9 @@ public class SshKey implements Serializable {
     protected String text;
     protected String label;
 
+    protected SshKey() {
+    }
+
     public SshKey(String text, String label, long id) {
         this.text = text;
         this.label = label;

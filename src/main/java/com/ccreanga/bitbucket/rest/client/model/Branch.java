@@ -28,6 +28,8 @@ public class Branch implements Serializable {
     private String repositorySlug;
     private String projectKey;
 
+    private Branch() {
+    }
 
     public Branch(String id, String displayId, String latestChangeset, boolean isDefault) {
         this.id = id;
