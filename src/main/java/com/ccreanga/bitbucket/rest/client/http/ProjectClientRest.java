@@ -48,7 +48,7 @@ import static com.ccreanga.bitbucket.rest.client.http.HttpMethod.*;
 
 class ProjectClientRest extends BitBucketClient implements ProjectClient {
 
-    public static final int DEFAULT_LIMIT = 25;
+    public static final int DEFAULT_LIMIT = 100;
 
     public ProjectClientRest(BitBucketHttpExecutor bitBucketHttpExecutor) {
         super(bitBucketHttpExecutor);
@@ -236,7 +236,8 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         pullRequests.addAll(page.getValues());
         while(!page.isLastPage()){
             range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
-            pullRequests.addAll( getPullRequests(projectKey, repositorySlug, pullRequestState,incoming,branchId, range).getValues());
+            page = getPullRequests(projectKey, repositorySlug, pullRequestState,incoming,branchId, range);
+            pullRequests.addAll(page.getValues());
         }
         return pullRequests;
     }
