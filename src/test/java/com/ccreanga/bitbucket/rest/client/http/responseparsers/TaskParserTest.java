@@ -41,12 +41,12 @@ public class TaskParserTest {
                 98,
                 TaskState.OPEN,
                 "Fix typos on the constructor's arguments",
-                new Date(1442553509203l),
+                new Date(1442553509203L),
                 new Comment(
                         1, 1, "An insightful comment.",
                         new User(101, "jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL),
-                        new Date(1442553508956l),
-                        new Date(1442553508956l),
+                        new Date(1442553508956L),
+                        new Date(1442553508956L),
                         Collections.<Comment>emptyList(), new PermittedOperations(true, true)
                 ),
                 new User(101, "jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL),

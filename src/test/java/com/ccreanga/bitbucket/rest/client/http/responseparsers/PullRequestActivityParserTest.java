@@ -46,8 +46,8 @@ public class PullRequestActivityParserTest{
 
     @Test
     public void testApplyMerged() throws Exception {
-        PullRequestActivityParser pullRequestActivityParser = new PullRequestActivityParser();
-        PullRequestActivity pullRequestActivity = new PullRequestMergedActivity(101l,new Date(1359085920l),new User(101,"jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL));
+        PullRequestActivityParser pullRequestActivityParser = new PullRequestActivityParser(1);
+        PullRequestActivity pullRequestActivity = new PullRequestMergedActivity(101L,new Date(1359085920L),new User(101,"jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL),1);
 
         JsonElement element = new JsonParser().parse(TestUtil.loadString("pull_requests_activities_merged.json"));
         PullRequestActivity parsedPullRequestActivity = pullRequestActivityParser.apply(element);
@@ -56,24 +56,24 @@ public class PullRequestActivityParserTest{
 
     @Test
     public void testApplyCommented() throws Exception {
-        PullRequestActivityParser pullRequestActivityParser = new PullRequestActivityParser();
+        PullRequestActivityParser pullRequestActivityParser = new PullRequestActivityParser(1);
         PullRequestActivity pullRequestActivity =
                 new PullRequestCommentActivity(
-                        101l,
-                        new Date(1359065920l),
-                        new User(101,"jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL),
+                        101L,
+                        new Date(1359065920L),
+                        new User(101,"jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL),1,
                         "ADDED",
                         new Comment(
                                 1, 1, "A measured reply.",
                                 new User(101, "jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL),
-                                new Date(1442553508960l),
-                                new Date(1442553508960l),
+                                new Date(1442553508960L),
+                                new Date(1442553508960L),
                                 Arrays.asList(
                                         new Comment(
                                                 1,1,"An insightful comment.",
                                                 new User(101,"jcitizen","jane@example.com","Jane Citizen",true,"jcitizen",UserType.NORMAL),
-                                                new Date(1442553508956l),
-                                                new Date(1442553508956l),
+                                                new Date(1442553508956L),
+                                                new Date(1442553508956L),
                                                 Collections.<Comment>emptyList(),new PermittedOperations(true,true))),
                                 new PermittedOperations(true,true)),
                         new CommentAnchor(
@@ -97,24 +97,24 @@ public class PullRequestActivityParserTest{
 
     @Test
     public void testApplyRescoped() throws Exception {
-        PullRequestActivityParser pullRequestActivityParser = new PullRequestActivityParser();
+        PullRequestActivityParser pullRequestActivityParser = new PullRequestActivityParser(1);
 
         List<Commit> added = new ArrayList<>();
         List<MinimalCommit> minimalCommits = new ArrayList<>();
         minimalCommits.add(new MinimalCommit("abcdef0123abcdef4567abcdef8987abcdef6543","abcdef0"));
-        added.add(new Commit("abcdef0123abcdef4567abcdef8987abcdef6543","abcdef0123a","charlie","charlie@example.com",1442553509807l,"WIP on feature 1",minimalCommits));
-        added.add(new Commit("abcdef0123abcdef4567abcdef8987abcdef6543","abcdef0123a","charlie","charlie@example.com",1442553509156l,"WIP on feature 1",minimalCommits));
+        added.add(new Commit("abcdef0123abcdef4567abcdef8987abcdef6543","abcdef0123a","charlie","charlie@example.com",1442553509807L,"WIP on feature 1",minimalCommits));
+        added.add(new Commit("abcdef0123abcdef4567abcdef8987abcdef6543","abcdef0123a","charlie","charlie@example.com",1442553509156L,"WIP on feature 1",minimalCommits));
 
         List<Commit> removed = new ArrayList<>();
         minimalCommits = new ArrayList<>();
         minimalCommits.add(new MinimalCommit("abcdef0123abcdef4567abcdef8987abcdef6543","abcdef0"));
-        removed.add(new Commit("def0123abcdef4567abcdef8987abcdef6543abc","def0123abcd","charlie","charlie@example.com",1442553509807l,"More work on feature 1",minimalCommits));
-        removed.add(new Commit("def0123abcdef4567abcdef8987abcdef6543abc","def0123abcd","charlie","charlie@example.com",1442553509156l,"More work on feature 1",minimalCommits));
+        removed.add(new Commit("def0123abcdef4567abcdef8987abcdef6543abc","def0123abcd","charlie","charlie@example.com",1442553509807L,"More work on feature 1",minimalCommits));
+        removed.add(new Commit("def0123abcdef4567abcdef8987abcdef6543abc","def0123abcd","charlie","charlie@example.com",1442553509156L,"More work on feature 1",minimalCommits));
 
         PullRequestActivity pullRequestActivity = new PullRequestRescopedActivity(
-                101l,
+                101L,
                 new Date(1359065920),
-                new User(101,"jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL),
+                new User(101,"jcitizen", "jane@example.com", "Jane Citizen", true, "jcitizen", UserType.NORMAL),1L,
                 "abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde",
                 "bcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdea",
                 "cdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeab",

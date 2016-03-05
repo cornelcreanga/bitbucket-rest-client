@@ -30,6 +30,13 @@ import java.util.List;
 import static com.ccreanga.bitbucket.rest.client.http.responseparsers.Parsers.*;
 
 public class PullRequestActivityParser implements Function<JsonElement, PullRequestActivity> {
+
+    private long pullRequestId;
+
+    public PullRequestActivityParser(long pullRequestId) {
+        this.pullRequestId = pullRequestId;
+    }
+
     @Override
     public PullRequestActivity apply(JsonElement jsonElement) {
         if (jsonElement == null || !jsonElement.isJsonObject()) {
@@ -43,6 +50,7 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
                     userParser().apply(json.getAsJsonObject("user")),
+                    pullRequestId,
                     json.get("commentAction").getAsString(),
                     commentParser().apply(json.getAsJsonObject("comment")),
                     commentAnchorParser().apply(json.getAsJsonObject("commentAnchor")),
@@ -63,6 +71,7 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
                     userParser().apply(json.getAsJsonObject("user")),
+                    pullRequestId,
                     json.get("fromHash").getAsString(),
                     json.get("previousFromHash").getAsString(),
                     json.get("previousToHash").getAsString(),
@@ -76,42 +85,48 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
             return new PullRequestMergedActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
-                    userParser().apply(json.getAsJsonObject("user"))
+                    userParser().apply(json.getAsJsonObject("user")),
+                    pullRequestId
             );
         }
         else if (actionType == PullRequestActivityActionType.APPROVED) {
             return new PullRequestApprovedActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
-                    userParser().apply(json.getAsJsonObject("user"))
+                    userParser().apply(json.getAsJsonObject("user")),
+                    pullRequestId
             );
         }
         else if (actionType == PullRequestActivityActionType.DECLINED) {
             return new PullRequestDeclinedActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
-                    userParser().apply(json.getAsJsonObject("user"))
+                    userParser().apply(json.getAsJsonObject("user")),
+                    pullRequestId
             );
         }
         else if (actionType == PullRequestActivityActionType.UNAPPROVED) {
             return new PullRequestUnapprovedActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
-                    userParser().apply(json.getAsJsonObject("user"))
+                    userParser().apply(json.getAsJsonObject("user")),
+                    pullRequestId
             );
         }
         else if (actionType == PullRequestActivityActionType.OPENED) {
             return new PullRequestOpenedActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
-                    userParser().apply(json.getAsJsonObject("user"))
+                    userParser().apply(json.getAsJsonObject("user")),
+                    pullRequestId
             );
         }
         else if (actionType == PullRequestActivityActionType.REOPENED) {
             return new PullRequestReOpenedActivity(
                     json.get("id").getAsLong(),
                     new Date(json.get("createdDate").getAsLong()),
-                    userParser().apply(json.getAsJsonObject("user"))
+                    userParser().apply(json.getAsJsonObject("user")),
+                    pullRequestId
             );
         }  else
             throw new RuntimeException("cannot parse action:" + actionType);

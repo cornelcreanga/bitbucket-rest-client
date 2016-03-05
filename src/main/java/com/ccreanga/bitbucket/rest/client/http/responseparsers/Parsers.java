@@ -95,8 +95,8 @@ public class Parsers {
         return PULL_REQUEST_CHANGE_PARSER;
     }
 
-    public static Function<JsonElement, PullRequestActivity> pullRequestActivityParser() {
-        return PULL_REQUEST_ACTIVITY_PARSER;
+    public static Function<JsonElement, PullRequestActivity> pullRequestActivityParser(long pullRequestId) {
+        return new PullRequestActivityParser(pullRequestId);
     }
 
     public static Function<JsonElement, Comment> commentParser() {
@@ -153,7 +153,7 @@ public class Parsers {
     private static PullRequestParser PULL_REQUEST_PARSER = new PullRequestParser();
     private static PullRequestParticipantParser PULL_REQUEST_PARTICIPANT_PARSER = new PullRequestParticipantParser();
     private static PullRequestBranchParser PULL_REQUEST_BRANCH_PARSER = new PullRequestBranchParser();
-    private static PullRequestActivityParser PULL_REQUEST_ACTIVITY_PARSER = new PullRequestActivityParser();
+
     private static PullRequestChangeParser PULL_REQUEST_CHANGE_PARSER = new PullRequestChangeParser();
     private static PathParser PATH_PARSER = new PathParser();
     private static CommentParser COMMENT_PARSER = new CommentParser();

@@ -23,7 +23,6 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class PullRequestRescopedActivity extends PullRequestActivity{
 
@@ -38,10 +37,11 @@ public class PullRequestRescopedActivity extends PullRequestActivity{
     protected PullRequestRescopedActivity() {
     }
 
-    public PullRequestRescopedActivity(Long id, Date createdDate, User user, String fromHash, String previousFromHash, String previousToHash, String toHash, List<Commit> added, List<Commit> removed) {
+    public PullRequestRescopedActivity(Long id, Date createdDate, User user, Long pullRequestId, String fromHash, String previousFromHash, String previousToHash, String toHash, List<Commit> added, List<Commit> removed) {
         this.id = id;
         this.createdDate = createdDate;
         this.user = user;
+        this.pullRequestId = pullRequestId;
         this.fromHash = fromHash;
         this.previousFromHash = previousFromHash;
         this.previousToHash = previousToHash;
@@ -79,22 +79,39 @@ public class PullRequestRescopedActivity extends PullRequestActivity{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         PullRequestRescopedActivity that = (PullRequestRescopedActivity) o;
-        return Objects.equals(fromHash, that.fromHash) &&
-                Objects.equals(previousFromHash, that.previousFromHash) &&
-                Objects.equals(previousToHash, that.previousToHash) &&
-                Objects.equals(toHash, that.toHash) &&
-                Objects.equals(added, that.added) &&
-                Objects.equals(removed, that.removed) &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(createdDate, that.createdDate) &&
-                Objects.equals(user, that.user) &&
-                Objects.equals(actionType, that.actionType);
+
+        if (pullRequestId != that.pullRequestId) return false;
+        if (fromHash != null ? !fromHash.equals(that.fromHash) : that.fromHash != null) return false;
+        if (previousFromHash != null ? !previousFromHash.equals(that.previousFromHash) : that.previousFromHash != null)
+            return false;
+        if (previousToHash != null ? !previousToHash.equals(that.previousToHash) : that.previousToHash != null)
+            return false;
+        if (toHash != null ? !toHash.equals(that.toHash) : that.toHash != null) return false;
+        if (added != null ? !added.equals(that.added) : that.added != null) return false;
+        if (removed != null ? !removed.equals(that.removed) : that.removed != null) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
+        if (user != null ? !user.equals(that.user) : that.user != null) return false;
+        return actionType == that.actionType;
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fromHash, previousFromHash, previousToHash, toHash, added, removed, id, createdDate, user, actionType);
+        int result = fromHash != null ? fromHash.hashCode() : 0;
+        result = 31 * result + (previousFromHash != null ? previousFromHash.hashCode() : 0);
+        result = 31 * result + (previousToHash != null ? previousToHash.hashCode() : 0);
+        result = 31 * result + (toHash != null ? toHash.hashCode() : 0);
+        result = 31 * result + (added != null ? added.hashCode() : 0);
+        result = 31 * result + (removed != null ? removed.hashCode() : 0);
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (int) (pullRequestId ^ (pullRequestId >>> 32));
+        result = 31 * result + (actionType != null ? actionType.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -109,6 +126,7 @@ public class PullRequestRescopedActivity extends PullRequestActivity{
                 ", id=" + id +
                 ", createdDate=" + createdDate +
                 ", user=" + user +
+                ", pullRequestId=" + pullRequestId +
                 ", actionType=" + actionType +
                 '}';
     }
