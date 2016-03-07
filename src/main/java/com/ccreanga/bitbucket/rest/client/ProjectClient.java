@@ -159,6 +159,7 @@ public interface ProjectClient {
 
     /**
      * Returns a page of pull requests (between Range.start and Range.start+Range.limit)  associated with a project/repository, with the specified state
+     * The filtering parameters users/  will work only for stash version >= 3.10 otherwise they are ignored
      * @param projectKey project key
      * @param repositorySlug repository slug
      * @param pullRequestState (optional) pullRequest state; null means all the states
@@ -183,6 +184,20 @@ public interface ProjectClient {
             boolean[] approved,
             @Nonnull Range range);
 
+    /**
+     * Returns a page of pull requests (between Range.start and Range.start+Range.limit)  associated with a project/repository, with the specified state
+     * The filtering parameters users/  will work only for stash version >= 3.10 otherwise they are ignored
+     * @param projectKey project key
+     * @param repositorySlug repository slug
+     * @param pullRequestState (optional) pullRequest state; null means all the states
+     * @param incoming the direction relative to the specified repository (true=INCOMING false=OUTGOING).
+     * @param branchId (optional) a fully-qualified branch ID to find pull requests to or from
+     * @param newestFirst the order to return pull requests in (newest/oldest)
+     * @param users filter the pull request specifying an array of participants
+     * @param pullRequestRoles (optional) - specify the role for each participant
+     * @param approved (optional) - the approved status associated with the users
+     * @return a Page of PullRequests
+     */
     public Set<PullRequest> getPullRequests(
             @Nonnull String projectKey,
             @Nonnull String repositorySlug,
