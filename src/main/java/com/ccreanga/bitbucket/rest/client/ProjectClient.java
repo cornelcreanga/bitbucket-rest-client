@@ -19,6 +19,7 @@ package com.ccreanga.bitbucket.rest.client;
 
 import com.ccreanga.bitbucket.rest.client.model.*;
 import com.ccreanga.bitbucket.rest.client.model.pull.PullRequest;
+import com.ccreanga.bitbucket.rest.client.model.pull.PullRequestRole;
 import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestActivity;
 import com.ccreanga.bitbucket.rest.client.model.pull.PullRequestChange;
 import com.ccreanga.bitbucket.rest.client.model.pull.PullRequestState;
@@ -135,9 +136,9 @@ public interface ProjectClient {
      * Returns a page of pull requests (between Range.start and Range.start+Range.limit)  associated with a project/repository, with the specified state
      * @param projectKey project key
      * @param repositorySlug repository slug
+     * @param pullRequestState (optional) pullRequest state; null means all the states
      * @param incoming the direction relative to the specified repository (true=INCOMING false=OUTGOING).
      * @param branchId (optional) a fully-qualified branch ID to find pull requests to or from
-     * @param pullRequestState (optional) pullRequest state; null means all the states
      * @param range limit object
      * @return a Page of PullRequests
      */
@@ -148,13 +149,51 @@ public interface ProjectClient {
      * Returns all the pull requests associated with a project/repository, with the specified state
      * @param projectKey project key
      * @param repositorySlug repository slug
+     * @param pullRequestState pullRequest state; null means all the states
      * @param incoming the direction relative to the specified repository (true=INCOMING false=OUTGOING).
      * @param branchId (optional) a fully-qualified branch ID to find pull requests to or from
-     * @param pullRequestState pullRequest state; null means all the states
      * @return a Set of PullRequests
      */
     Set<PullRequest> getPullRequests(@Nonnull String projectKey, @Nonnull String repositorySlug,PullRequestState pullRequestState, boolean incoming,
                                      String branchId);
+
+    /**
+     * Returns a page of pull requests (between Range.start and Range.start+Range.limit)  associated with a project/repository, with the specified state
+     * @param projectKey project key
+     * @param repositorySlug repository slug
+     * @param pullRequestState (optional) pullRequest state; null means all the states
+     * @param incoming the direction relative to the specified repository (true=INCOMING false=OUTGOING).
+     * @param branchId (optional) a fully-qualified branch ID to find pull requests to or from
+     * @param newestFirst the order to return pull requests in (newest/oldest)
+     * @param users filter the pull request specifying an array of participants
+     * @param pullRequestRoles (optional) - specify the role for each participant
+     * @param approved (optional) - the approved status associated with the users
+     * @param range limit object
+     * @return a Page of PullRequests
+     */
+    public Page<PullRequest> getPullRequests(
+            @Nonnull String projectKey,
+            @Nonnull String repositorySlug,
+            PullRequestState pullRequestState,
+            boolean incoming,
+            String branchId,
+            boolean newestFirst,
+            String[] users,
+            PullRequestRole[] pullRequestRoles,
+            boolean[] approved,
+            @Nonnull Range range);
+
+    public Set<PullRequest> getPullRequests(
+            @Nonnull String projectKey,
+            @Nonnull String repositorySlug,
+            PullRequestState pullRequestState,
+            boolean incoming,
+            String branchId,
+            boolean newestFirst,
+            String[] users,
+            PullRequestRole[] pullRequestRoles,
+            boolean[] approved);
+
     /**
      * Returns a page of changes (between Range.start and Range.start+Range.limit)  associated with a project/repository/pull request
      * @param projectKey project key

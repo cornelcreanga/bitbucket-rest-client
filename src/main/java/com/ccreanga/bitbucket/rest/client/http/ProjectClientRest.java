@@ -26,6 +26,7 @@ import com.ccreanga.bitbucket.rest.client.model.Task;
 import com.ccreanga.bitbucket.rest.client.model.pull.PullRequestChange;
 import com.ccreanga.bitbucket.rest.client.model.Page;
 import com.ccreanga.bitbucket.rest.client.model.pull.PullRequest;
+import com.ccreanga.bitbucket.rest.client.model.pull.PullRequestRole;
 import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestActivity;
 import com.ccreanga.bitbucket.rest.client.model.User;
 import com.ccreanga.bitbucket.rest.client.Range;
@@ -38,6 +39,7 @@ import com.google.gson.JsonElement;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -210,17 +212,8 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
             boolean incoming,
             String branchId,
             @Nonnull Range range) {
-        String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/pull-requests", projectKey, repositorySlug) + addLimits(range);
 
-        String state = pullRequestState==null?"ALL":pullRequestState.toString();
-        String direction = incoming?"INCOMING":"OUTGOING";
-        requestUrl+="&state="+state;
-        requestUrl+="&direction="+direction;
-        if (branchId!=null)
-            requestUrl+="&at="+branchId;
-
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(pullRequestParser()).apply(jsonElement);
+        return getPullRequests(projectKey,repositorySlug,pullRequestState,incoming,branchId,true,null,null,null,range);
     }
 
     @Override
@@ -242,7 +235,92 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         return pullRequests;
     }
 
+
     @Override
+    public Set<PullRequest> getPullRequests(
+            @Nonnull String projectKey,
+            @Nonnull String repositorySlug,
+            PullRequestState pullRequestState,
+            boolean incoming,
+            String branchId,
+            boolean newestFirst,
+            String[] users,
+            PullRequestRole[] pullRequestRoles,
+            boolean[] approved) {
+
+        Range range = new Range(0, DEFAULT_LIMIT);
+        Page<PullRequest> page = getPullRequests(projectKey, repositorySlug, pullRequestState,incoming,branchId,newestFirst,users,pullRequestRoles,approved,range);
+        Set<PullRequest> pullRequests = new HashSet<>(page.getSize());
+        pullRequests.addAll(page.getValues());
+        while(!page.isLastPage()){
+            range = new Range(page.getNextPageStart(), DEFAULT_LIMIT);
+            page = getPullRequests(projectKey, repositorySlug, pullRequestState,incoming,branchId,newestFirst,users,pullRequestRoles,approved, range);
+            pullRequests.addAll(page.getValues());
+        }
+        return pullRequests;
+    }
+
+
+    @Override
+    public Page<PullRequest> getPullRequests(
+            @Nonnull String projectKey,
+            @Nonnull String repositorySlug,
+            PullRequestState pullRequestState,
+            boolean incoming,
+            String branchId,
+            boolean newestFirst,
+            String[] users,
+            PullRequestRole[] pullRequestRoles,
+            boolean[] approved,
+            @Nonnull Range range) {
+
+        if (((approved!=null) || (pullRequestRoles!=null)) && (users==null))
+            throw new IllegalArgumentException("approved and pullRequestRoles have sense only when users are also specified");
+
+        if (users!=null){
+            if ((pullRequestRoles!=null) && (users.length!=pullRequestRoles.length))
+                throw new IllegalArgumentException("users and pullRequestRoles should have the same length");
+            if ((approved!=null) && (users.length!=approved.length))
+                throw new IllegalArgumentException("users and approved should have the same length");
+        }
+
+
+        if ((users!=null) && (users.length!=pullRequestRoles.length))
+            throw new IllegalArgumentException("users and pullRequestRoles should have the same length");
+
+        String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/pull-requests", projectKey, repositorySlug) + addLimits(range);
+
+        requestUrl+="&state="+(pullRequestState==null?"ALL":pullRequestState.toString());
+        requestUrl+="&direction="+(incoming?"INCOMING":"OUTGOING");;
+        if (branchId!=null)
+            requestUrl+="&at="+branchId;
+        requestUrl+="order="+(newestFirst?"NEWEST":"OLDEST");
+
+        if (users!=null) {
+            for (int i = 0; i < users.length; i++) {
+                String user = users[i];
+                requestUrl += "&" + user+"."+i;
+            }
+        }
+        if (pullRequestRoles!=null) {
+            for (int i = 0; i < pullRequestRoles.length; i++) {
+                PullRequestRole role = pullRequestRoles[i];
+                requestUrl += "&" + role.toString()+"."+i;
+            }
+        }
+        if (approved!=null) {
+            for (int i = 0; i < approved.length; i++) {
+                boolean approve = approved[i];
+                requestUrl += "&" + approve+"."+i;
+            }
+        }
+
+        JsonElement jsonElement = execute(requestUrl, GET, null).get();
+        return pageParser(pullRequestParser()).apply(jsonElement);
+
+    }
+
+        @Override
     public Page<PullRequestChange> getPullRequestsChanges(
             @Nonnull String projectKey,
             @Nonnull String repositorySlug,
