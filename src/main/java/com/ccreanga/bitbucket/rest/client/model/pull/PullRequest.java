@@ -79,6 +79,13 @@ public class PullRequest  implements Serializable {
         this.selfUrl = selfUrl;
     }
 
+    public boolean createdBetween(Date start,Date end){
+        return ((createdDate.getTime()>=start.getTime()) && (createdDate.getTime()<=end.getTime()));
+    }
+    public String fromRepository(){
+        return from.getRepositorySlug();
+    }
+
     public long getId() {
         return id;
     }

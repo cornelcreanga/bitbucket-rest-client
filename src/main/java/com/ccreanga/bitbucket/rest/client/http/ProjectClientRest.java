@@ -143,7 +143,8 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     @Override
     public Page<Branch> getBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Range range) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/branches", projectKey, repositorySlug) + addLimits(range);
-        requestUrl += addParameter("filterText", query);
+        if (query!=null)
+            requestUrl += addParameter("filterText", query);
         requestUrl += "&details=true&orderBy=MODIFICATION";
 
         JsonElement jsonElement = execute(requestUrl, GET, null).get();
@@ -360,7 +361,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
                 pullRequestId) + addLimits(range);
 
         JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(pullRequestActivityParser()).apply(jsonElement);
+        return pageParser(pullRequestActivityParser(pullRequestId)).apply(jsonElement);
     }
 
     @Override

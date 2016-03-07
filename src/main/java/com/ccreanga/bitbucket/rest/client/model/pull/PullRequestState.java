@@ -20,5 +20,8 @@ package com.ccreanga.bitbucket.rest.client.model.pull;
 import java.io.Serializable;
 
 public enum PullRequestState implements Serializable {
-    OPEN, DECLINED, MERGED
+    /**
+     * ALL makes sense only when using this enum as a parameter for search
+     */
+    ALL,OPEN, DECLINED, MERGED
 }

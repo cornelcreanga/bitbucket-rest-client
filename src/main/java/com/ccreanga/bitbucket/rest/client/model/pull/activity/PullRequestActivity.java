@@ -27,9 +27,18 @@ public abstract class PullRequestActivity implements Serializable {
     protected Long id;
     protected Date createdDate;
     protected User user;
+    protected long pullRequestId;
     protected PullRequestActivityActionType actionType;
 
     protected PullRequestActivity() {
+    }
+
+    protected PullRequestActivity(Long id, Date createdDate, User user, long pullRequestId, PullRequestActivityActionType actionType) {
+        this.id = id;
+        this.createdDate = createdDate;
+        this.user = user;
+        this.pullRequestId = pullRequestId;
+        this.actionType = actionType;
     }
 
     public Long getId() {
@@ -42,6 +51,10 @@ public abstract class PullRequestActivity implements Serializable {
 
     public User getUser() {
         return user;
+    }
+
+    public long getPullRequestId() {
+        return pullRequestId;
     }
 
     public PullRequestActivityActionType getActionType() {

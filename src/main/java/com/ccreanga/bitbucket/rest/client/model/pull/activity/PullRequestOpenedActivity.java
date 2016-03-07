@@ -25,31 +25,36 @@ import java.util.Objects;
 
 public class PullRequestOpenedActivity extends PullRequestActivity{
 
-
     protected PullRequestOpenedActivity() {
     }
 
-    public PullRequestOpenedActivity(Long id, Date createdDate, User user) {
-        this.id = id;
-        this.createdDate = createdDate;
-        this.user = user;
-        this.actionType = PullRequestActivityActionType.OPENED;
+    public PullRequestOpenedActivity(Long id, Date createdDate, User user, long pullRequestId) {
+        super(id, createdDate, user, pullRequestId, PullRequestActivityActionType.OPENED);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         PullRequestOpenedActivity that = (PullRequestOpenedActivity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(createdDate, that.createdDate) &&
-                Objects.equals(user, that.user) &&
-                Objects.equals(actionType, that.actionType);
+
+        if (pullRequestId != that.pullRequestId) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
+        if (user != null ? !user.equals(that.user) : that.user != null) return false;
+        return actionType == that.actionType;
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdDate, user, actionType);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (int) (pullRequestId ^ (pullRequestId >>> 32));
+        result = 31 * result + (actionType != null ? actionType.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -58,8 +63,8 @@ public class PullRequestOpenedActivity extends PullRequestActivity{
                 "id=" + id +
                 ", createdDate=" + createdDate +
                 ", user=" + user +
+                ", pullRequestId=" + pullRequestId +
                 ", actionType=" + actionType +
                 '}';
     }
-
 }
