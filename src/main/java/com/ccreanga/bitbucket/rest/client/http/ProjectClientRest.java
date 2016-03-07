@@ -295,7 +295,7 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         requestUrl+="&direction="+(incoming?"INCOMING":"OUTGOING");;
         if (branchId!=null)
             requestUrl+="&at="+branchId;
-        requestUrl+="order="+(newestFirst?"NEWEST":"OLDEST");
+        requestUrl+="&order="+(newestFirst?"NEWEST":"OLDEST");
 
         if (users!=null) {
             for (int i = 0; i < users.length; i++) {
