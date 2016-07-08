@@ -38,12 +38,7 @@ import com.google.gson.JsonElement;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.ccreanga.bitbucket.rest.client.http.responseparsers.Parsers.*;
 import static com.ccreanga.bitbucket.rest.client.http.HttpMethod.*;
@@ -59,8 +54,14 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     @Override
     public Page<Project> getProjects(@Nonnull Range range) {
         String requestUrl = "/rest/api/1.0/projects" + addLimits(range);
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(projectParser()).apply(jsonElement);
+
+        try {
+            JsonElement jsonElement = execute(requestUrl, GET, null).get();
+            return pageParser(projectParser()).apply(jsonElement);
+        }catch (ResourceNotFoundException e){
+            return new Page<>(0,0,true,0,0, Collections.EMPTY_LIST);
+        }
+
     }
 
     public Set<Project> getProjects() {
@@ -90,8 +91,13 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     @Override
     public Page<Repository> getProjectRepositories(@Nonnull String projectKey, @Nonnull Range range) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos", projectKey) + addLimits(range);
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(repositoryParser()).apply(jsonElement);
+
+        try {
+            JsonElement jsonElement = execute(requestUrl, GET, null).get();
+            return pageParser(repositoryParser()).apply(jsonElement);
+        }catch (ResourceNotFoundException e){
+            return new Page<>(0,0,true,0,0, Collections.EMPTY_LIST);
+        }
     }
 
     @Override
@@ -111,8 +117,12 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     @Override
     public Page<Repository> getAllRepositories(@Nonnull Range range) {
         String requestUrl = "/rest/api/1.0/repos" + addLimits(range);
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(repositoryParser()).apply(jsonElement);
+        try {
+            JsonElement jsonElement = execute(requestUrl, GET, null).get();
+            return pageParser(repositoryParser()).apply(jsonElement);
+        }catch (ResourceNotFoundException e){
+            return new Page<>(0,0,true,0,0, Collections.EMPTY_LIST);
+        }
     }
 
     @Override
@@ -147,14 +157,21 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
             requestUrl += addParameter("filterText", query);
         requestUrl += "&details=true&orderBy=MODIFICATION";
 
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        Page<Branch> page = pageParser(branchParser()).apply(jsonElement);
-        List<Branch> list = page.getValues();
-        for (Branch branch : list) {
-            branch.setProjectKey(projectKey);
-            branch.setRepositorySlug(repositorySlug);
+
+        try {
+            JsonElement jsonElement = execute(requestUrl, GET, null).get();
+            Page<Branch> page = pageParser(branchParser()).apply(jsonElement);
+            List<Branch> list = page.getValues();
+            for (Branch branch : list) {
+                branch.setProjectKey(projectKey);
+                branch.setRepositorySlug(repositorySlug);
+            }
+            return page;
+
+        }catch (ResourceNotFoundException e){
+            return new Page<>(0,0,true,0,0, Collections.EMPTY_LIST);
         }
-        return page;
+
     }
 
     @Override
@@ -175,8 +192,12 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     public Page<Repository> getForks(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nonnull Range range) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/forks", projectKey, repositorySlug) + addLimits(range);
 
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(repositoryParser()).apply(jsonElement);
+        try {
+            JsonElement jsonElement = execute(requestUrl, GET, null).get();
+            return pageParser(repositoryParser()).apply(jsonElement);
+        }catch (ResourceNotFoundException e){
+            return new Page<>(0,0,true,0,0, Collections.EMPTY_LIST);
+        }
     }
 
     @Override
@@ -316,8 +337,12 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
             }
         }
 
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(pullRequestParser()).apply(jsonElement);
+        try {
+            JsonElement jsonElement = execute(requestUrl, GET, null).get();
+            return pageParser(pullRequestParser()).apply(jsonElement);
+        }catch (ResourceNotFoundException e){
+            return new Page<>(0,0,true,0,0, Collections.EMPTY_LIST);
+        }
 
     }
 
@@ -334,8 +359,14 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
                 pullRequestId) + addLimits(range);
         if (sinceCommitId!=null)
             requestUrl+="&since="+sinceCommitId;
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(pullRequestChangeParser()).apply(jsonElement);
+
+        try {
+            JsonElement jsonElement = execute(requestUrl, GET, null).get();
+            return pageParser(pullRequestChangeParser()).apply(jsonElement);
+        }catch (ResourceNotFoundException e){
+            return new Page<>(0,0,true,0,0, Collections.EMPTY_LIST);
+        }
+
     }
 
     @Override
@@ -360,8 +391,13 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
                 repositorySlug,
                 pullRequestId) + addLimits(range);
 
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(pullRequestActivityParser(pullRequestId)).apply(jsonElement);
+        try {
+            JsonElement jsonElement = execute(requestUrl, GET, null).get();
+            return pageParser(pullRequestActivityParser(pullRequestId)).apply(jsonElement);
+        }catch (ResourceNotFoundException e){
+            return new Page<>(0,0,true,0,0, Collections.EMPTY_LIST);
+        }
+
     }
 
     @Override
@@ -385,8 +421,12 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
                 repositorySlug,
                 pullRequestId) + addLimits(range);
 
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(taskParser()).apply(jsonElement);
+        try {
+            JsonElement jsonElement = execute(requestUrl, GET, null).get();
+            return pageParser(taskParser()).apply(jsonElement);
+        }catch (ResourceNotFoundException e){
+            return new Page<>(0,0,true,0,0, Collections.EMPTY_LIST);
+        }
     }
 
     @Override
@@ -407,8 +447,13 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     public Page<User> getUsers(@Nonnull Range range) {
         String requestUrl = "/rest/api/1.0/users" + addLimits(range);
 
-        JsonElement jsonElement = execute(requestUrl, GET, null).get();
-        return pageParser(userParser()).apply(jsonElement);
+        try {
+            JsonElement jsonElement = execute(requestUrl, GET, null).get();
+            return pageParser(userParser()).apply(jsonElement);
+        }catch (ResourceNotFoundException e){
+            return new Page<>(0,0,true,0,0, Collections.EMPTY_LIST);
+        }
+
     }
 
     @Override
