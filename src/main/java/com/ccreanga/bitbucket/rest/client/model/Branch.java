@@ -17,6 +17,8 @@
 
 package com.ccreanga.bitbucket.rest.client.model;
 
+import com.google.gson.JsonObject;
+
 import java.io.Serializable;
 
 public class Branch implements Serializable {
@@ -27,6 +29,7 @@ public class Branch implements Serializable {
 
     private String repositorySlug;
     private String projectKey;
+    private JsonObject metadata;
 
     private Branch() {
     }
@@ -68,6 +71,14 @@ public class Branch implements Serializable {
 
     public void setProjectKey(String projectKey) {
         this.projectKey = projectKey;
+    }
+
+    public JsonObject getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(JsonObject metadata) {
+        this.metadata = metadata;
     }
 
     @Override

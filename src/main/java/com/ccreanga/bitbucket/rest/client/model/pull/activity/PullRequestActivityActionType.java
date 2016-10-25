@@ -19,8 +19,8 @@ package com.ccreanga.bitbucket.rest.client.model.pull.activity;
 
 import java.io.Serializable;
 
-public enum PullRequestActivityActionType  implements Serializable {
+public enum PullRequestActivityActionType implements Serializable {
 
-    COMMENTED,RESCOPED,MERGED,APPROVED,DECLINED,OPENED,REOPENED,UNAPPROVED,UPDATED
+    COMMENTED, RESCOPED, MERGED, APPROVED, DECLINED, OPENED, REOPENED, UNAPPROVED, UPDATED, REVIEWED
 
-    }
+}

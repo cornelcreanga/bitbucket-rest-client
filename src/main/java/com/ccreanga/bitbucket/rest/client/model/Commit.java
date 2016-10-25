@@ -46,6 +46,34 @@ public class Commit implements Serializable {
         this.parentsIds = ImmutableList.copyOf(parentsIds);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getDisplayId() {
+        return displayId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    public long getAuthorTimestamp() {
+        return authorTimestamp;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public List<MinimalCommit> getParentsIds() {
+        return parentsIds;
+    }
+
     @Override
     public String toString() {
         return "Commit{" +

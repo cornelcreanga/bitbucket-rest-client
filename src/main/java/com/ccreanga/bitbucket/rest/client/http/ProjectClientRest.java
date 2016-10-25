@@ -141,11 +141,11 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
     }
 
     @Override
-    public Page<Branch> getBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Range range) {
+    public Page<Branch> getBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Range range, boolean details) {
         String requestUrl = String.format("/rest/api/1.0/projects/%s/repos/%s/branches", projectKey, repositorySlug) + addLimits(range);
         if (query!=null)
             requestUrl += addParameter("filterText", query);
-        requestUrl += "&details=true&orderBy=MODIFICATION";
+        requestUrl += "&details=" + details + "&orderBy=MODIFICATION";
 
         JsonElement jsonElement = execute(requestUrl, GET, null).get();
         Page<Branch> page = pageParser(branchParser()).apply(jsonElement);
@@ -155,6 +155,11 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
             branch.setRepositorySlug(repositorySlug);
         }
         return page;
+    }
+
+    @Override
+    public Page<Branch> getBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Range range) {
+        return getBranches(projectKey, repositorySlug, query, range, true);
     }
 
     @Override
@@ -275,6 +280,8 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
             boolean[] approved,
             @Nonnull Range range) {
 
+        // this is defined in the REST API
+        final int maxParticipantParams = 10;
         if (((approved!=null) || (pullRequestRoles!=null)) && (users==null))
             throw new IllegalArgumentException("approved and pullRequestRoles have sense only when users are also specified");
 
@@ -298,21 +305,21 @@ class ProjectClientRest extends BitBucketClient implements ProjectClient {
         requestUrl+="&order="+(newestFirst?"NEWEST":"OLDEST");
 
         if (users!=null) {
-            for (int i = 0; i < users.length; i++) {
+            for (int i = 0; i < users.length && i < maxParticipantParams; i++) {
                 String user = users[i];
-                requestUrl += "&" + user+"."+i;
+                requestUrl += String.format("&username.%d=%s", i+1, user);
             }
         }
         if (pullRequestRoles!=null) {
-            for (int i = 0; i < pullRequestRoles.length; i++) {
+            for (int i = 0; i < pullRequestRoles.length && i < maxParticipantParams; i++) {
                 PullRequestRole role = pullRequestRoles[i];
-                requestUrl += "&" + role.toString()+"."+i;
+                requestUrl += String.format("&role.%d=%s", i+1, role.toString());
             }
         }
         if (approved!=null) {
-            for (int i = 0; i < approved.length; i++) {
+            for (int i = 0; i < approved.length && i < maxParticipantParams; i++) {
                 boolean approve = approved[i];
-                requestUrl += "&" + approve+"."+i;
+                requestUrl += String.format("&approved.%d=%s", i+1, approve);
             }
         }
 

@@ -94,6 +94,17 @@ public interface ProjectClient {
      * Returns a page of repository branches (between Range.start and Range.start+Range.limit)
      * @param projectKey project key
      * @param repositorySlug repository slug
+     * @param query optional parameter. If not null it will return the branches matching this parameter
+     * @param range limit object
+     * @param details boolean for whether to expand details per branch
+     * @return a Page of branches
+     */
+    Page<Branch> getBranches(@Nonnull String projectKey, @Nonnull String repositorySlug, @Nullable String query, @Nonnull Range range, boolean details);
+
+    /**
+     * Returns a page of repository branches (between Range.start and Range.start+Range.limit)
+     * @param projectKey project key
+     * @param repositorySlug repository slug
      * @param query optional parameter. If not null it will return the braches matching this parameter
      * @param range limit object
      * @return a Page of branches
