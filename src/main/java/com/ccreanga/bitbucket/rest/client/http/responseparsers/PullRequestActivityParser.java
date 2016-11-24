@@ -128,6 +128,22 @@ public class PullRequestActivityParser implements Function<JsonElement, PullRequ
                     userParser().apply(json.getAsJsonObject("user")),
                     pullRequestId
             );
+        }
+        else if (actionType == PullRequestActivityActionType.UPDATED) {
+            return new PullRequestUpdatedActivity(
+                    json.get("id").getAsLong(),
+                    new Date(json.get("createdDate").getAsLong()),
+                    userParser().apply(json.getAsJsonObject("user")),
+                    pullRequestId
+            );
+        }
+        else if (actionType == PullRequestActivityActionType.REVIEWED) {
+            return new PullRequestReviewedActivity(
+                    json.get("id").getAsLong(),
+                    new Date(json.get("createdDate").getAsLong()),
+                    userParser().apply(json.getAsJsonObject("user")),
+                    pullRequestId
+            );
         }  else
             throw new RuntimeException("cannot parse action:" + actionType);
 

@@ -26,11 +26,15 @@ class BranchParser implements Function<JsonElement, Branch> {
     @Override
     public Branch apply(JsonElement jsonElement) {
         JsonObject json = jsonElement.getAsJsonObject();
-        return new Branch(
+        final Branch branch = new Branch(
                 json.get("id").getAsString(),
                 json.get("displayId").getAsString(),
                 json.get("latestChangeset").getAsString(),
                 json.get("isDefault").getAsBoolean()
         );
+        if (json.has("metadata")) {
+            branch.setMetadata(json.getAsJsonObject("metadata"));
+        }
+        return branch;
     }
 }
